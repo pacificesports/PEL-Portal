@@ -13,13 +13,15 @@ jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+    name: Build and Deploy
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Setup Flutter
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
       - name: Get Dependencies
         run: flutter pub get
       - name: Build
@@ -36,12 +38,13 @@ jobs:
           app_location: "build/web" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "build/web" # Built app content directory - optional
+          production_branch: "develop"
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
-    name: Close Pull Request Job
+    name: Close Pull Request
     steps:
       - name: Close Pull Request
         id: closepullrequest
