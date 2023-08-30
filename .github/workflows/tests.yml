@@ -3,12 +3,9 @@ run-name: Triggered by ${{ github.event_name }} to ${{ github.ref }} by @${{ git
 
 on:
   push:
-  pull_request:
-    types: [opened, synchronize, reopened]
 
 jobs:
   flutter_test_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Test
     steps:
