@@ -4,9 +4,9 @@ run-name: Triggered by ${{ github.event_name }} to ${{ github.ref }} by @${{ git
 on:
   push:
 
-env:
-  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
-  ENV_STAGE: ${{ secrets.ENV_STAGE }}
+#env:
+#  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+#  ENV_STAGE: ${{ secrets.ENV_STAGE }}
 
 jobs:
   flutter_test_job:
