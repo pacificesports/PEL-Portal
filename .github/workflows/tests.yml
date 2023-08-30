@@ -1,0 +1,24 @@
+name: Flutter Tests
+run-name: Triggered by ${{ github.event_name }} to ${{ github.ref }} by @${{ github.actor }}
+
+on:
+  push:
+
+jobs:
+  flutter_test_job:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Get Dependencies
+        run: flutter pub get
+      - name: Analyze
+        run: flutter analyze
+      - name: Test
+        run: flutter test --coverage
