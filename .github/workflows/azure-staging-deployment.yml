@@ -1,4 +1,5 @@
 name: Azure Staging Deployment
+run-name: Triggered by ${{ github.event_name }} to ${{ github.ref }} by @${{ github.actor }
 
 on:
   push:
