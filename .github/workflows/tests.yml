@@ -1,9 +1,9 @@
 name: Flutter Tests
 run-name: Triggered by ${{ github.event_name }} to ${{ github.ref }} by @${{ github.actor }}
 
-env:
-  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
-  ENV_STAGE: ${{ secrets.ENV_STAGE }}
+#env:
+#  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+#  ENV_STAGE: ${{ secrets.ENV_STAGE }}
 
 on:
   push:
@@ -19,9 +19,9 @@ jobs:
       - name: Copy files
         run: |
           touch .env
-          echo $ENV_STAGE >> .env
+          echo echo '{{ secrets.ENV_STAGE }}' >> .env
           touch lib/firebase_options.dart
-          echo $FIREBASE_OPTIONS >> lib/firebase_options.dart
+          echo echo '{{ secrets.FIREBASE_OPTIONS }}' >> lib/firebase_options.dart
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
