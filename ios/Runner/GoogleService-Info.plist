@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>267113091903-i91t3v9o3f093vq2d22v05fpun508hth.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.267113091903-i91t3v9o3f093vq2d22v05fpun508hth</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDJA5Y2gsmC3udunam5cAi0P8-GxZiPSCI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>267113091903</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bk1031.pelPortal</string>
+	<key>PROJECT_ID</key>
+	<string>pacific-esports</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pacific-esports.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:267113091903:ios:7fd67dbb8ab58e8878398a</string>
+	<key>DATABASE_URL</key>
+	<string>https://pacific-esports-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

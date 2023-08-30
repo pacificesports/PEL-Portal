@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "267113091903",
+    "firebase_url": "https://pacific-esports-default-rtdb.firebaseio.com",
+    "project_id": "pacific-esports",
+    "storage_bucket": "pacific-esports.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267113091903:android:bf5c4f7d9b06a94278398a",
+        "android_client_info": {
+          "package_name": "com.bk1031.pel_portal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267113091903-hua7b8rhv2f122hclmlbihrobl8rorj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYrCuzkJFoD9lYbiKhDaKMlotem2DyeN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267113091903-hua7b8rhv2f122hclmlbihrobl8rorj0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

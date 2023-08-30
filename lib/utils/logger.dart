@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 List<Log> logs = [];
 
 void log(var message, [LogLevel logLevel = LogLevel.info]) {
-  print(message.toString());
+  debugPrint(message.toString());
   logs.add(Log(message.toString(), logLevel));
 }
 
