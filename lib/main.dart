@@ -23,6 +23,7 @@ Future<void> main() async {
   };
 
   await dotenv.load(fileName: ".env");
+  API_HOST = dotenv.env["PEL_API_HOST"]!;
   PEL_API_KEY = dotenv.env["PEL_API_KEY"]!;
   ONESIGNAL_APP_ID = dotenv.env["ONESIGNAL_APP_ID"]!;
 
