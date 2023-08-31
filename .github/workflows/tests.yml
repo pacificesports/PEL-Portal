@@ -1,0 +1,34 @@
+name: Flutter Tests
+run-name: Triggered by ${{ github.event_name }} to ${{ github.ref }} by @${{ github.actor }}
+
+env:
+  FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+  ENV_STAGE: ${{ secrets.ENV_STAGE }}
+
+on:
+  push:
+
+jobs:
+  flutter_test_job:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Copy files
+        run: |
+          touch .env
+          echo "${{ secrets.ENV_STAGE }}" > .env
+          touch lib/firebase_options.dart
+          echo "${{ secrets.FIREBASE_OPTIONS }}" > lib/firebase_options.dart
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Get Dependencies
+        run: flutter pub get
+      - name: Analyze
+        run: flutter analyze
+      - name: Test
+        run: flutter test --coverage
