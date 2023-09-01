@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class LayoutHelper {
-
   static const double _desktopContentWidth = 1400;
   static const double _desktopPadding = 32;
 
@@ -17,7 +16,11 @@ class LayoutHelper {
     return isMobile ? screenWidth : _desktopContentWidth;
   }
 
-  static double getPadding(BuildContext context) {
+  static EdgeInsets getPadding(BuildContext context) {
+    return EdgeInsets.all(getPaddingDouble(context));
+  }
+
+  static double getPaddingDouble(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < _mobileMaxWidth;
     return isMobile ? _mobilePadding : _desktopPadding;

@@ -19,7 +19,7 @@ class PublicHeader extends StatelessWidget {
             child: Container(
               color: Theme.of(context).cardColor,
               width: LayoutHelper.getContentWidth(context),
-              padding: EdgeInsets.symmetric(horizontal: LayoutHelper.getPadding(context)),
+              padding: EdgeInsets.symmetric(horizontal: LayoutHelper.getPaddingDouble(context)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -30,7 +30,7 @@ class PublicHeader extends StatelessWidget {
                   PELTextButton(
                     text: "Login",
                     // disabled: true,
-                    // style: PELTextButtonStyle.outlined,
+                    style: PELTextButtonStyle.outlined,
                     onPressed: () {},
                   )
                 ],

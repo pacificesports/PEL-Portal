@@ -36,7 +36,7 @@ class PELTextButton extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       child: Text(
         text,
-        style: TextStyle(color: textColor),
+        style: TextStyle(color: textColor, fontFamily: "Helvetica"),
       ),
     );
   }
@@ -45,13 +45,13 @@ class PELTextButton extends StatelessWidget {
     return CupertinoButton(
       onPressed: disabled ? null : onPressed as void Function()?,
       padding: padding ??
-          const EdgeInsets.only(left: 64, right: 64, top: 14, bottom: 14),
+          const EdgeInsets.only(left: 64, right: 64, top: 18, bottom: 14),
       color: color,
       disabledColor: color.withOpacity(0.5),
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: Text(
         text,
-        style: TextStyle(color: textColor),
+        style: TextStyle(color: textColor, fontFamily: "Helvetica"),
       ),
     );
   }
@@ -59,22 +59,22 @@ class PELTextButton extends StatelessWidget {
   Widget _buildOutlinedButton(BuildContext context) {
     return CupertinoButton(
       onPressed: disabled ? null : onPressed as void Function()?,
-      padding: padding ??
-          const EdgeInsets.only(left: 64, right: 64, top: 14, bottom: 14),
       color: Colors.transparent,
       disabledColor: color.withOpacity(0.5),
       child: Container(
-          // wrap the text/widget using container
-          padding: const EdgeInsets.all(8), // add padding
+          padding: padding ??
+              const EdgeInsets.only(left: 64, right: 64, top: 18, bottom: 14),
           decoration: BoxDecoration(
             border: Border.all(
               color: color,
               width: 2,
             ),
-            borderRadius: const BorderRadius.all(
-                Radius.circular(8)), // radius as you wish
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
           ),
-          child: Text(text, style: TextStyle(color: textColor))),
+          child: Text(
+            text,
+            style: TextStyle(color: textColor, fontFamily: "Helvetica"),
+          )),
     );
   }
 
