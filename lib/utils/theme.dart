@@ -61,6 +61,7 @@ final ThemeData lightTheme = ThemeData(
 
 /// Dark style
 final ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
   brightness: Brightness.dark,
   colorScheme: const ColorScheme.dark().copyWith(
     primary: SB_NAVY,

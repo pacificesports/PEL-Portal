@@ -47,7 +47,7 @@ Future<void> main() async {
   runApp(AdaptiveTheme(
     light: lightTheme,
     dark: darkTheme,
-    initial: AdaptiveThemeMode.light,
+    initial: AdaptiveThemeMode.dark,
     builder: (theme, darkTheme) =>
         MaterialApp(
           title: "PEL Portal",
