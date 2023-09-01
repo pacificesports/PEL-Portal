@@ -31,6 +31,7 @@ class PELTextButton extends StatelessWidget {
   Widget _buildTextButton(BuildContext context) {
     return CupertinoButton(
       onPressed: disabled ? null : onPressed as void Function()?,
+      color: color,
       disabledColor: color.withOpacity(0.5),
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       padding: padding ?? EdgeInsets.zero,
@@ -61,9 +62,9 @@ class PELTextButton extends StatelessWidget {
       onPressed: disabled ? null : onPressed as void Function()?,
       color: Colors.transparent,
       disabledColor: color.withOpacity(0.5),
+      padding: EdgeInsets.zero,
       child: Container(
-          padding: padding ??
-              const EdgeInsets.only(left: 64, right: 64, top: 18, bottom: 14),
+          padding: padding ?? const EdgeInsets.only(left: 64, right: 64, top: 18, bottom: 14),
           decoration: BoxDecoration(
             border: Border.all(
               color: color,

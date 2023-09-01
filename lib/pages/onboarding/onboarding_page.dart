@@ -109,12 +109,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                                "Through esports,\nwe excel.",
-                                                style: TextStyle(
-                                                  fontSize: 32,
-                                                  fontFamily: "Helvetica",
-                                                  fontWeight: FontWeight.bold,
-                                                )
+                                              "Through esports,\nwe excel.",
+                                              style: TextStyle(
+                                                fontSize: 32,
+                                                fontFamily: "Helvetica",
+                                                fontWeight: FontWeight.bold,
+                                              )
                                             ),
                                           ],
                                         ),

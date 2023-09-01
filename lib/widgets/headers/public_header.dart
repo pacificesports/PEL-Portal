@@ -27,11 +27,23 @@ class PublicHeader extends StatelessWidget {
                     "assets/images/pel_abbrev/abbrev-mono.svg",
                     height: 75,
                   ),
-                  PELTextButton(
-                    text: "Login",
-                    // disabled: true,
-                    style: PELTextButtonStyle.outlined,
-                    onPressed: () {},
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      PELTextButton(
+                        text: "Login",
+                        padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 14),
+                        style: PELTextButtonStyle.outlined,
+                        onPressed: () {},
+                      ),
+                      const SizedBox(width: 16,),
+                      PELTextButton(
+                        text: "Create Account",
+                        padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 14),
+                        style: PELTextButtonStyle.filled,
+                        onPressed: () {},
+                      ),
+                    ],
                   )
                 ],
               ),
