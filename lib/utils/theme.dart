@@ -1,8 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
 
-Color PEL_MAIN = PEL_PURPLE;
+const Color PEL_MAIN = Color(0xFF6F4ACB);
 
 Color PEL_BLUE = const Color(0xFF087CFF);
 Color PEL_PURPLE = const Color(0xFF6F4ACB);

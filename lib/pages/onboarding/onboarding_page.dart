@@ -11,14 +11,12 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
-          const PublicHeader(),
-          Container(
-            child: Center(
-              child: Text("Onboarding Page"),
-            ),
+          PublicHeader(),
+          Center(
+            child: Text("Onboarding Page"),
           )
         ],
       ),
