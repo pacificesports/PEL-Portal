@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pel_portal/widgets/headers/public_header.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -10,8 +11,17 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Pacific Esports League"),
+    return Scaffold(
+      body: Column(
+        children: [
+          const PublicHeader(),
+          Container(
+            child: Center(
+              child: Text("Onboarding Page"),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -65,6 +65,7 @@ dependencies:
   badges: ^2.0.3
   fuzzywuzzy: 0.1.6
   visibility_detector: ^0.4.0+2
+  flutter_svg: ^2.0.7
 
 dev_dependencies:
   integration_test:
@@ -98,6 +99,8 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/pel_icons/
+    - assets/images/pel_abbrev/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -111,17 +114,25 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+
+  fonts:
+    - family: Helvetica
+      fonts:
+      - asset: assets/fonts/helvetica/Helvetica.ttf
+      - asset: assets/fonts/helvetica/Helvetica-Oblique.ttf
+        style: italic
+      - asset: assets/fonts/helvetica/Helvetica-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/helvetica/Helvetica-BoldOblique.ttf
+        style: italic
+        weight: 700
+    - family: Marsek
+      fonts:
+        - asset: assets/fonts/marsek/marsek.ttf
+    - family: Stretch Sans
+      fonts:
+        - asset: assets/fonts/stretch/Stretch-Sans.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
