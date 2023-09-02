@@ -50,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: LayoutHelper.getPaddingDouble(context), left: 16),
+                    padding: EdgeInsets.only(top: LayoutHelper.pd(context), left: LayoutHelper.hpd(context)),
                     child: const Text(
                       "Recent News",
                       style: TextStyle(
@@ -62,7 +62,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                   Container(
                     height: 600,
-                    padding: EdgeInsets.only(top: LayoutHelper.getPaddingDouble(context) / 2),
+                    padding: EdgeInsets.only(top: LayoutHelper.hpd(context)),
                     child: Row(
                       children: [
                         Expanded(
@@ -123,7 +123,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              const Padding(padding: EdgeInsets.only(top: 16)),
+                              Padding(padding: EdgeInsets.only(top: LayoutHelper.hpd(context))),
                               Expanded(
                                 child: Card(
                                   child: Container(
@@ -157,7 +157,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: LayoutHelper.getPaddingDouble(context), left: 16),
+                    padding: EdgeInsets.only(top: LayoutHelper.pd(context), left: LayoutHelper.hpd(context)),
                     child: const Text(
                       "Pacific Esports Tournaments",
                       style: TextStyle(
@@ -169,7 +169,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                   Container(
                     height: 300,
-                    padding: EdgeInsets.only(top: LayoutHelper.getPaddingDouble(context) / 2),
+                    padding: EdgeInsets.only(top: LayoutHelper.hpd(context)),
                     child: Row(
                       children: [
                         Expanded(
@@ -197,11 +197,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             ),
                           ),
                         ),
-                        const Padding(padding: EdgeInsets.only(left: 16)),
+                        Padding(padding: EdgeInsets.only(left: LayoutHelper.hpd(context))),
                         Expanded(
                           child: Card(
                             child: Container(
-                              padding: LayoutHelper.getPadding(context),
+                              padding: LayoutHelper.p(context),
                               child: const Stack(
                                 children: [
                                   Column(
@@ -209,12 +209,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                          "California Clash",
-                                          style: TextStyle(
-                                            fontSize: 32,
-                                            fontFamily: "Helvetica",
-                                            fontWeight: FontWeight.bold,
-                                          )
+                                        "California Clash",
+                                        style: TextStyle(
+                                          fontSize: 32,
+                                          fontFamily: "Helvetica",
+                                          fontWeight: FontWeight.bold,
+                                        )
                                       ),
                                     ],
                                   ),
@@ -227,11 +227,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                   ),
                   Padding(
-                    padding: LayoutHelper.getPadding(context),
+                    padding: EdgeInsets.all(LayoutHelper.pd(context) * 2),
                     child: Center(
-                      child: PELTextButton(
-                        text: "Join a tournament today!",
-                        onPressed: () {},
+                      child: SizedBox(
+                        width: 400,
+                        child: PELTextButton(
+                          text: "Join a tournament today!",
+                          onPressed: () {},
+                        ),
                       ),
                     ),
                   )

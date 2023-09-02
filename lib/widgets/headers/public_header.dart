@@ -32,14 +32,12 @@ class PublicHeader extends StatelessWidget {
                     children: [
                       PELTextButton(
                         text: "Login",
-                        padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 14),
                         style: PELTextButtonStyle.outlined,
                         onPressed: () {},
                       ),
                       const SizedBox(width: 16,),
                       PELTextButton(
                         text: "Create Account",
-                        padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 14),
                         style: PELTextButtonStyle.filled,
                         onPressed: () {},
                       ),
