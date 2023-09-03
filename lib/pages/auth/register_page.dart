@@ -370,9 +370,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 children: [
                                                   Row(
                                                     children: [
-                                                      Text("Discord ID:", style: TextStyle(fontSize: 18)),
+                                                      const Text("Discord ID:", style: TextStyle(fontSize: 18)),
                                                       const Padding(padding: EdgeInsets.all(2)),
-                                                      Text(discordID, style: TextStyle(fontSize: 18, color: Colors.grey)),
+                                                      Text(discordID, style: const TextStyle(fontSize: 18, color: Colors.grey)),
                                                       const Padding(padding: EdgeInsets.all(2)),
                                                       const Icon(Icons.check_circle_outline_rounded, color: PEL_SUCCESS)
                                                     ],
@@ -380,9 +380,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   const Padding(padding: EdgeInsets.all(4)),
                                                   Row(
                                                     children: [
-                                                      Text("Discord Username:", style: TextStyle(fontSize: 18)),
+                                                      const Text("Discord Username:", style: TextStyle(fontSize: 18)),
                                                       const Padding(padding: EdgeInsets.all(2)),
-                                                      Text(discordUsername, style: TextStyle(fontSize: 18, color: Colors.grey)),
+                                                      Text("@$discordUsername", style: const TextStyle(fontSize: 18, color: Colors.grey)),
                                                       const Padding(padding: EdgeInsets.all(2)),
                                                       const Icon(Icons.check_circle_outline_rounded, color: PEL_SUCCESS)
                                                     ],
@@ -400,7 +400,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               Visibility(
                                 visible: (discordCode != "" && discordID == "") || loading,
-                                child: Center(child: RefreshProgressIndicator(backgroundColor: PEL_MAIN, color: Colors.white,)),
+                                child: const Center(child: RefreshProgressIndicator(backgroundColor: PEL_MAIN, color: Colors.white,)),
                               ),
                               Visibility(
                                 visible: discordCode == "",
