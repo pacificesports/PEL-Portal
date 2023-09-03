@@ -4,7 +4,7 @@ import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 import 'package:pel_portal/widgets/headers/public_header.dart';
 
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({super.key});
+  const OnboardingPage({Key? key}) : super(key: key);
 
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();
@@ -19,14 +19,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
           children: [
             const PublicHeader(),
             Container(
-              padding: LayoutHelper.getPadding(context),
-              width: LayoutHelper.getContentWidth(context),
+              padding: LH.p(context),
+              width: LH.cw(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Card(
                     child: Container(
-                      padding: LayoutHelper.getPadding(context),
+                      padding: LH.p(context),
                       width: double.infinity,
                       height: 500,
                       child: const Stack(
@@ -50,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: LayoutHelper.pd(context), left: LayoutHelper.hpd(context)),
+                    padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
                     child: const Text(
                       "Recent News",
                       style: TextStyle(
@@ -62,14 +62,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                   Container(
                     height: 600,
-                    padding: EdgeInsets.only(top: LayoutHelper.hpd(context)),
+                    padding: EdgeInsets.only(top: LH.hpd(context)),
                     child: Row(
                       children: [
                         Expanded(
                           flex: 2,
                           child: Card(
                             child: Container(
-                              padding: LayoutHelper.getPadding(context),
+                              padding: LH.p(context),
                               width: double.infinity,
                               child: const Stack(
                                 children: [
@@ -100,7 +100,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               Expanded(
                                 child: Card(
                                   child: Container(
-                                    padding: LayoutHelper.getPadding(context),
+                                    padding: LH.p(context),
                                     width: double.infinity,
                                     child: const Stack(
                                       children: [
@@ -123,11 +123,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              Padding(padding: EdgeInsets.only(top: LayoutHelper.hpd(context))),
+                              Padding(padding: EdgeInsets.only(top: LH.hpd(context))),
                               Expanded(
                                 child: Card(
                                   child: Container(
-                                    padding: LayoutHelper.getPadding(context),
+                                    padding: LH.p(context),
                                     width: double.infinity,
                                     child: const Stack(
                                       children: [
@@ -157,7 +157,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: LayoutHelper.pd(context), left: LayoutHelper.hpd(context)),
+                    padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
                     child: const Text(
                       "Pacific Esports Tournaments",
                       style: TextStyle(
@@ -169,13 +169,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                   Container(
                     height: 300,
-                    padding: EdgeInsets.only(top: LayoutHelper.hpd(context)),
+                    padding: EdgeInsets.only(top: LH.hpd(context)),
                     child: Row(
                       children: [
                         Expanded(
                           child: Card(
                             child: Container(
-                              padding: LayoutHelper.getPadding(context),
+                              padding: LH.p(context),
                               child: const Stack(
                                 children: [
                                   Column(
@@ -197,11 +197,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             ),
                           ),
                         ),
-                        Padding(padding: EdgeInsets.only(left: LayoutHelper.hpd(context))),
+                        Padding(padding: EdgeInsets.only(left: LH.hpd(context))),
                         Expanded(
                           child: Card(
                             child: Container(
-                              padding: LayoutHelper.p(context),
+                              padding: LH.p(context),
                               child: const Stack(
                                 children: [
                                   Column(
@@ -227,7 +227,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(LayoutHelper.pd(context) * 2),
+                    padding: EdgeInsets.all(LH.pd(context) * 2),
                     child: Center(
                       child: SizedBox(
                         width: 400,

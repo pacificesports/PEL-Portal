@@ -1,5 +1,7 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/theme.dart';
 import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
@@ -33,13 +35,17 @@ class PublicHeader extends StatelessWidget {
                       PELTextButton(
                         text: "Login",
                         style: PELTextButtonStyle.outlined,
-                        onPressed: () {},
+                        onPressed: () {
+                          router.navigateTo(context, "/auth/login", transition: TransitionType.fadeIn);
+                        },
                       ),
                       const SizedBox(width: 16,),
                       PELTextButton(
                         text: "Create Account",
                         style: PELTextButtonStyle.filled,
-                        onPressed: () {},
+                        onPressed: () {
+                          router.navigateTo(context, "/auth/register", transition: TransitionType.fadeIn);
+                        },
                       ),
                     ],
                   )

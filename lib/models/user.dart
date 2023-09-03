@@ -1,17 +1,24 @@
 
+import 'package:pel_portal/models/connection.dart';
+import 'package:pel_portal/models/privacy.dart';
+import 'package:pel_portal/models/user_school.dart';
+import 'package:pel_portal/models/verification.dart';
+
 class User {
   String id = "";
-  String userName = "";
   String firstName = "";
   String lastName = "";
   String preferredName = "";
   String pronouns = "";
   String email = "";
-  String phoneNumber = "";
   String profilePictureURL = "";
   String bio = "";
   String gender = "Male";
-  String status = "";
+  List<String> roles = [];
+  Privacy privacy = Privacy();
+  UserSchool school = UserSchool();
+  Verification verification = Verification();
+  List<Connection> connections = [];
   DateTime updatedAt = DateTime.now().toUtc();
   DateTime createdAt = DateTime.now().toUtc();
 
@@ -19,17 +26,23 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
     id = json["id"] ?? "";
-    userName = json["user_name"] ?? "";
     firstName = json["first_name"] ?? "";
     lastName = json["last_name"] ?? "";
     preferredName = json["preferred_name"] ?? "";
     pronouns = json["pronouns"] ?? "";
     email = json["email"] ?? "";
-    phoneNumber = json["phone_number"] ?? "";
     profilePictureURL = json["profile_picture_url"] ?? "";
     bio = json["bio"] ?? "";
     gender = json["gender"] ?? "";
-    status = json["status"] ?? "";
+    for (int i = 0; i < json["roles"].length; i++) {
+      roles.add(json["roles"][i]);
+    }
+    privacy = Privacy.fromJson(json["privacy"] ?? {});
+    school = UserSchool.fromJson(json["school"] ?? {});
+    verification = Verification.fromJson(json["verification"] ?? {});
+    for (int i = 0; i < json["connections"].length; i++) {
+      connections.add(Connection.fromJson(json["connections"][i]));
+    }
     updatedAt = DateTime.tryParse(json["updated_at"]) ?? DateTime.now().toUtc();
     createdAt = DateTime.tryParse(json["created_at"]) ?? DateTime.now().toUtc();
   }
@@ -37,17 +50,19 @@ class User {
   Map<String, dynamic> toJson() {
     return {
       "id": id,
-      "user_name": userName,
       "first_name": firstName,
       "last_name": lastName,
       "preferred_name": preferredName,
       "pronouns": pronouns,
       "email": email,
-      "phone_number": phoneNumber,
       "profile_picture_url": profilePictureURL,
       "bio": bio,
       "gender": gender,
-      "status": status,
+      "roles": roles,
+      "privacy": privacy,
+      "school": school,
+      "verification": verification,
+      "connections": connections,
       "updated_at": updatedAt.toIso8601String(),
       "created_at": createdAt.toIso8601String()
     };
@@ -55,53 +70,54 @@ class User {
 
   @override
   String toString() {
-    return "[$id] $firstName $lastName (@$userName)";
+    return "[$id] $firstName $lastName";
   }
 }
 
 /*
 {
-    "id": "bye",
-    "user_name": "",
-    "first_name": "Neel",
-    "last_name": "Tripathi",
-    "preferred_name": "NLT319",
-    "pronouns": "",
-    "email": "ntripathi@ucsb.edu",
-    "phone_number": "(510) 945-2131",
-    "profile_picture_url": "https://example.com",
-    "bio": "",
-    "gender": "",
-    "roles": [
-      {
-        "user_id": "bye",
-        "role": "STUDENT",
-        "created_at": "2022-05-29T05:00:47.958Z"
-      }
-    ],
-    "friends": [
-      {
-        "id": "hi-bye",
-        "from_user_id": "hi",
-        "to_user_id": "bye",
-        "status": "ACCEPTED",
-        "updated_at": "2022-05-27T05:11:20.51011Z",
-        "created_at": "2022-05-27T05:11:15.605154Z"
-      }
-    ],
-    "privacy": {
-      "user_id": "bye",
-      "email": "PUBLIC",
-      "phone_number": "PRIVATE",
-      "pronouns": "",
-      "gender": "",
-      "location": "DISABLED",
-      "push_notifications": "ENABLED",
-      "push_notification_token": "FCM-TOKEN-1239",
-      "updated_at": "2022-05-27T00:25:26.862199Z",
-      "created_at": "2022-05-27T00:16:17.483235Z"
-    },
-    "updated_at": "2022-05-27T00:25:26.858142Z",
-    "created_at": "2022-05-20T11:14:39.482805Z"
+  "id": "348220961155448833",
+  "first_name": "bharat",
+  "last_name": "kathi",
+  "preferred_name": "",
+  "pronouns": "",
+  "email": "",
+  "profile_picture_url": "",
+  "bio": "",
+  "gender": "",
+  "roles": [],
+  "privacy": {
+    "user_id": "",
+    "show_email": false,
+    "show_phone_number": false,
+    "show_pronouns": false,
+    "push_notifications_enabled": false,
+    "push_notification_token": "",
+    "match_reminders_enabled": false,
+    "updated_at": "0001-01-01T00:00:00Z",
+    "created_at": "0001-01-01T00:00:00Z"
+  },
+  "school": {
+    "user_id": "",
+    "school_id": "",
+    "school": null,
+    "graduation_year": 0,
+    "updated_at": "0001-01-01T00:00:00Z",
+    "created_at": "0001-01-01T00:00:00Z"
+  },
+  "verification": {
+    "user_id": "",
+    "type": "",
+    "file_url": "",
+    "status": "",
+    "comments": "",
+    "is_verified": false,
+    "is_email_verified": false,
+    "updated_at": "0001-01-01T00:00:00Z",
+    "created_at": "0001-01-01T00:00:00Z"
+  },
+  "connections": [],
+  "updated_at": "0001-01-01T00:00:00Z",
+  "created_at": "0001-01-01T00:00:00Z"
 }
 */

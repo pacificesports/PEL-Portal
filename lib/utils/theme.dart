@@ -2,12 +2,18 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:material_text_fields/theme/material_text_field_theme.dart';
 
 const Color PEL_MAIN = Color(0xFF6F4ACB);
 
-Color PEL_BLUE = const Color(0xFF087CFF);
-Color PEL_PURPLE = const Color(0xFF6F4ACB);
-Color PEL_GREY = const Color(0xFF121212);
+const Color PEL_BLUE = Color(0xFF087CFF);
+const Color PEL_PURPLE = Color(0xFF6F4ACB);
+const Color PEL_GREY = Color(0xFF121212);
+
+// COLORS
+const Color PEL_SUCCESS = Color(0xFF83D05D);
+const Color PEL_WARNING = Color(0xFFEDC25E);
+const Color PEL_ERROR = Color(0xFFE23645);
 
 // LIGHT THEME
 const lightBackgroundColor = Color(0xFFf9f9f9);
@@ -78,6 +84,12 @@ final ThemeData darkTheme = ThemeData(
   ),
   buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
+  ),
+  inputDecorationTheme: FilledOrOutlinedTextTheme(
+    radius: 8,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+    fillColor: darkBackgroundColor,
+    prefixIconColor: PEL_MAIN,
   ),
   dividerColor: darkDividerColor,
   dialogBackgroundColor: darkCardColor,

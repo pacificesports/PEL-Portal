@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
 
+class LH {
+  static double w(context) => LayoutHelper.width(context);
+  static double h(context) => LayoutHelper.height(context);
+
+  static double cw(context) => LayoutHelper.getContentWidth(context);
+
+  static EdgeInsets p(context) => LayoutHelper.getPadding(context);
+  static EdgeInsets hp(context) => LayoutHelper.getHalfPadding(context);
+  static double pd(context) => LayoutHelper.getPaddingDouble(context);
+  static double hpd(context) => LayoutHelper.getHalfPaddingDouble(context);
+}
+
 class LayoutHelper {
   static const double _desktopContentWidth = 1400;
   static const double _desktopPadding = 32;
@@ -9,12 +21,6 @@ class LayoutHelper {
 
   static double width(context) => MediaQuery.of(context).size.width;
   static double height(context) => MediaQuery.of(context).size.height;
-
-  // Helper functions for getting padding
-  static EdgeInsets p(context) => getPadding(context);
-  static EdgeInsets hp(context) => getHalfPadding(context);
-  static double pd(context) => getPaddingDouble(context);
-  static double hpd(context) => getHalfPaddingDouble(context);
 
   static bool isMobile(context) => width(context) < _mobileMaxWidth;
 

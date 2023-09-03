@@ -29,15 +29,18 @@ class PELTextButton extends StatelessWidget {
   }) : super(key: key);
 
   Widget _buildTextButton(BuildContext context) {
+    Color colorUsed = color;
+    if (textColor != Colors.white) {
+      colorUsed = textColor;
+    }
     return CupertinoButton(
       onPressed: disabled ? null : onPressed as void Function()?,
-      color: color,
-      disabledColor: color.withOpacity(0.5),
+      color: Colors.transparent,
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       padding: padding ?? EdgeInsets.zero,
       child: Text(
         text,
-        style: TextStyle(color: textColor, fontFamily: "Helvetica"),
+        style: TextStyle(color: colorUsed, fontFamily: "Helvetica"),
       ),
     );
   }
