@@ -15,8 +15,8 @@ class UserSchool {
     schoolID = json["school_id"] ?? "";
     school = School.fromJson(json["school"] ?? {});
     graduationYear = json["graduation_year"] ?? 0;
-    updatedAt = DateTime.tryParse(json["updated_at"]) ?? DateTime.now().toUtc();
-    createdAt = DateTime.tryParse(json["created_at"]) ?? DateTime.now().toUtc();
+    updatedAt = DateTime.tryParse(json["updated_at"] ?? "") ?? DateTime.now().toUtc();
+    createdAt = DateTime.tryParse(json["created_at"] ?? "") ?? DateTime.now().toUtc();
   }
 
   Map<String, dynamic> toJson() {

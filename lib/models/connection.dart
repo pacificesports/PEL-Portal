@@ -13,7 +13,7 @@ class Connection {
     key = json["key"] ?? "";
     name = json["name"] ?? "";
     connection = json["connection"] ?? "";
-    createdAt = DateTime.tryParse(json["created_at"]) ?? DateTime.now().toUtc();
+    createdAt = DateTime.tryParse(json["created_at"] ?? "") ?? DateTime.now().toUtc();
   }
 
   Map<String, dynamic> toJson() {

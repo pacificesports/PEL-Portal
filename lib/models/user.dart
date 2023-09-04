@@ -43,8 +43,8 @@ class User {
     for (int i = 0; i < json["connections"].length; i++) {
       connections.add(Connection.fromJson(json["connections"][i]));
     }
-    updatedAt = DateTime.tryParse(json["updated_at"]) ?? DateTime.now().toUtc();
-    createdAt = DateTime.tryParse(json["created_at"]) ?? DateTime.now().toUtc();
+    updatedAt = DateTime.tryParse(json["updated_at"] ?? "") ?? DateTime.now().toUtc();
+    createdAt = DateTime.tryParse(json["created_at"] ?? "") ?? DateTime.now().toUtc();
   }
 
   Map<String, dynamic> toJson() {

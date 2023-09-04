@@ -19,8 +19,8 @@ class Verification {
     comments = json["comments"] ?? "";
     isVerified = json["is_verified"] ?? false;
     isEmailVerified = json["is_email_verified"] ?? false;
-    updatedAt = DateTime.tryParse(json["updated_at"]) ?? DateTime.now().toUtc();
-    createdAt = DateTime.tryParse(json["created_at"]) ?? DateTime.now().toUtc();
+    updatedAt = DateTime.tryParse(json["updated_at"] ?? "") ?? DateTime.now().toUtc();
+    createdAt = DateTime.tryParse(json["created_at"] ?? "") ?? DateTime.now().toUtc();
   }
 
   Map<String, dynamic> toJson() {

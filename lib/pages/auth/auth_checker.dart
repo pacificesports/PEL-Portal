@@ -4,6 +4,7 @@ import 'package:firebase_performance/firebase_performance.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:pel_portal/utils/alert_service.dart';
+import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/logger.dart';
 import 'package:pel_portal/utils/theme.dart';
@@ -78,6 +79,14 @@ class _AuthCheckerState extends State<AuthChecker> {
       } else {
         // User logged in
         try {
+          Logger.info("[auth_checker_page] Firebase session detected: ${user.uid}");
+          await AuthService.getUser(user.uid);
+          if (currentUser.id == "") {
+            // User logged in, but no user data in db
+            Future.delayed(Duration.zero, () => router.navigateTo(context, "/auth/register", transition: TransitionType.fadeIn, replace: true, clearStack: true));
+            trace.stop();
+            return;
+          }
 
         } catch (err) {
           Logger.error("[auth_checker_page] $err");
@@ -118,7 +127,7 @@ class _AuthCheckerState extends State<AuthChecker> {
                       lineWidth: 7,
                       circularStrokeCap: CircularStrokeCap.round,
                       percent: 1,
-                      // progressColor: sbNavy,
+                      // progressColor: Colors.white,
                       progressColor: Theme.of(context).cardColor,
                     ),
                     CircularPercentIndicator(
@@ -126,7 +135,7 @@ class _AuthCheckerState extends State<AuthChecker> {
                       lineWidth: 7,
                       circularStrokeCap: CircularStrokeCap.round,
                       percent: 1,
-                      // progressColor: sbNavy,
+                      // progressColor: Colors.white,
                       progressColor: Theme.of(context).cardColor,
                     ),
                     CircularPercentIndicator(
@@ -138,7 +147,7 @@ class _AuthCheckerState extends State<AuthChecker> {
                         percent: percent,
                         // progressColor: Colors.white,
                         progressColor: PEL_MAIN,
-                        // backgroundColor: sbNavy,
+                        // backgroundColor: Colors.white,
                         backgroundColor: Theme.of(context).cardColor,
                     ),
                   ],

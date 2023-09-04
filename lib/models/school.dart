@@ -31,8 +31,8 @@ class School {
     for (var email in json["emails"] ?? []) {
       emails.add(email["email"] ?? "");
     }
-    updatedAt = DateTime.tryParse(json["updated_at"]) ?? DateTime.now().toUtc();
-    createdAt = DateTime.tryParse(json["created_at"]) ?? DateTime.now().toUtc();
+    updatedAt = DateTime.tryParse(json["updated_at"] ?? "") ?? DateTime.now().toUtc();
+    createdAt = DateTime.tryParse(json["created_at"] ?? "") ?? DateTime.now().toUtc();
   }
 
   Map<String, dynamic> toJson() {

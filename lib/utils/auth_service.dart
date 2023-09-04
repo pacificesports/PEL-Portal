@@ -25,6 +25,7 @@ class AuthService {
     else {
       // logged but not user data found!
       log("PEL Portal account not found!");
+      currentUser = User();
       // signOut();
     }
     trace.stop();

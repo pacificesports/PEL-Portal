@@ -19,8 +19,8 @@ class Privacy {
     pushNotificationsEnabled = json["push_notifications_enabled"] ?? false;
     pushNotificationToken = json["push_notification_token"] ?? "";
     matchRemindersEnabled = json["match_reminders_enabled"] ?? false;
-    updatedAt = DateTime.tryParse(json["updated_at"]) ?? DateTime.now().toUtc();
-    createdAt = DateTime.tryParse(json["created_at"]) ?? DateTime.now().toUtc();
+    updatedAt = DateTime.tryParse(json["updated_at"] ?? "") ?? DateTime.now().toUtc();
+    createdAt = DateTime.tryParse(json["created_at"] ?? "") ?? DateTime.now().toUtc();
   }
 
   Map<String, dynamic> toJson() {
