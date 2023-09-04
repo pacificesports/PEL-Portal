@@ -1,6 +1,6 @@
 class School {
   String id = "";
-  String userID = "";
+  String name = "";
   String description = "";
   String website = "";
   String iconURL = "";
@@ -17,7 +17,7 @@ class School {
 
   School.fromJson(Map<String, dynamic> json) {
     id = json["id"] ?? "";
-    userID = json["user_id"] ?? "";
+    name = json["name"] ?? "";
     description = json["description"] ?? "";
     website = json["website"] ?? "";
     iconURL = json["icon_url"] ?? "";
@@ -38,7 +38,7 @@ class School {
   Map<String, dynamic> toJson() {
     return {
       "id": id,
-      "user_id": userID,
+      "name": name,
       "description": description,
       "website": website,
       "icon_url": iconURL,
