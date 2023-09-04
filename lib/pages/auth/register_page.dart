@@ -174,7 +174,20 @@ class _RegisterPageState extends State<RegisterPage> {
       var authResult = await fb.FirebaseAuth.instance.signInWithCustomToken(loginToken);
       Logger.info("Successfully logged in as ${authResult.user!.uid}.");
       fb.AuthCredential emailCredential = fb.EmailAuthProvider.credential(email: email, password: password);
-      await authResult.user!.linkWithCredential(emailCredential);
+      try {
+        await authResult.user!.linkWithCredential(emailCredential);
+      } on fb.FirebaseAuthException catch (err) {
+        if (err.code == "provider-already-linked") {
+          await authResult.user!.unlink(emailCredential.providerId);
+          await authResult.user!.linkWithCredential(emailCredential);
+        } else {
+          setState(() {loading = false;});
+          Logger.error("[register_page] Error occured while creating account. $err");
+          Future.delayed(Duration.zero, () {
+            AlertService.showErrorSnackbar(context, "Error occured while creating account. $err");
+          });
+        }
+      }
       Logger.info("Successfully linked email $email to ${authResult.user!.uid}.");
 
       User registerUser = User();
