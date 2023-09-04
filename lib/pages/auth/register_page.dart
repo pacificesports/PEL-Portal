@@ -88,8 +88,10 @@ class _RegisterPageState extends State<RegisterPage> {
           "redirect_uri": DISCORD_REDIRECT_URI
         });
         if (oauthResponse.statusCode != 200) {
-          Logger.error("Error occured while connecting Discord. ${oauthResponse.body}");
-          AlertService.showErrorSnackbar(context, "Error occured while connecting Discord. ${oauthResponse.body}");
+          Logger.error("Error occurred while connecting Discord. ${oauthResponse.body}");
+          Future.delayed(Duration.zero, () {
+            AlertService.showErrorSnackbar(context, "Error occured while connecting Discord. ${oauthResponse.body}");
+          });
           return;
         }
         var responseJson = jsonDecode(oauthResponse.body);
@@ -99,8 +101,10 @@ class _RegisterPageState extends State<RegisterPage> {
         });
         var discordResponse = await httpClient.get(Uri.parse("https://discord.com/api/v10/users/@me"), headers: {"Authorization": "Bearer $discordToken"});
         if (discordResponse.statusCode != 200) {
-          Logger.error("Error occured while connecting Discord. ${discordResponse.body}");
-          AlertService.showErrorSnackbar(context, "Error occured while connecting Discord. ${discordResponse.body}");
+          Logger.error("Error occurred while connecting Discord. ${discordResponse.body}");
+          Future.delayed(Duration.zero, () {
+            AlertService.showErrorSnackbar(context, "Error occured while connecting Discord. ${discordResponse.body}");
+          });
           setState(() {
             discordCode = "";
             discordID = "";
@@ -115,7 +119,9 @@ class _RegisterPageState extends State<RegisterPage> {
         });
       } catch (err) {
         Logger.error("Error occured while connecting Discord. $err");
-        AlertService.showErrorSnackbar(context, "Error occured while connecting Discord. $err");
+        Future.delayed(Duration.zero, () {
+          AlertService.showErrorSnackbar(context, "Error occured while connecting Discord. $err");
+        });
         setState(() {
           discordCode = "";
           discordID = "";
@@ -158,7 +164,9 @@ class _RegisterPageState extends State<RegisterPage> {
      if (loginResponse.statusCode != 200) {
        setState(() {loading = false;});
        Logger.error("[register_page] Error occured while creating account. ${loginResponse.body}");
-       AlertService.showErrorSnackbar(context, "Error occured while creating account. ${loginResponse.body}");
+       Future.delayed(Duration.zero, () {
+         AlertService.showErrorSnackbar(context, "Error occured while creating account. ${loginResponse.body}");
+       });
        return;
      }
       var loginJson = jsonDecode(loginResponse.body);
@@ -209,20 +217,24 @@ class _RegisterPageState extends State<RegisterPage> {
       if (createdUser.statusCode != 200) {
         setState(() {loading = false;});
         Logger.error("[register_page] Error occured while creating account. ${createdUser.body}");
-        AlertService.showErrorSnackbar(context, "Error occured while creating account. ${createdUser.body}");
+        Future.delayed(Duration.zero, () {
+          AlertService.showErrorSnackbar(context, "Error occured while creating account. ${createdUser.body}");
+        });
         return;
       } else {
         setState(() {loading = false;});
         Logger.info("[register_page] Account created successfully!");
-        AlertService.showSuccessSnackbar(context, "Account created successfully!");
         Future.delayed(Duration.zero, () {
+          AlertService.showSuccessSnackbar(context, "Account created successfully!");
           router.navigateTo(context, "/auth/check", clearStack: true, replace: true, transition: TransitionType.fadeIn);
         });
       }
     } catch (err) {
       setState(() {loading = false;});
       Logger.error("[register_page] Error occured while creating account. $err");
-      AlertService.showErrorSnackbar(context, "Error occured while creating account. $err");
+      Future.delayed(Duration.zero, () {
+        AlertService.showErrorSnackbar(context, "Error occured while creating account. $err");
+      });
     }
   }
 

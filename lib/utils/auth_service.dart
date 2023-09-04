@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:firebase_performance/firebase_performance.dart';
-import 'package:fluro/fluro.dart';
 import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/logger.dart';
@@ -42,7 +41,6 @@ class AuthService {
     await trace.start();
     PEL_AUTH_TOKEN = (await fb.FirebaseAuth.instance.currentUser!.getIdToken(true))!;
     Logger.info("Retrieved auth token: ...${PEL_AUTH_TOKEN.substring(PEL_AUTH_TOKEN.length - 20)}");
-    // await Future.delayed(const Duration(milliseconds: 100));
     trace.stop();
   }
 
