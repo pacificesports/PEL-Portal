@@ -91,9 +91,9 @@ final ThemeData darkTheme = ThemeData(
     fillColor: darkBackgroundColor,
     prefixIconColor: PEL_MAIN,
   ),
+  splashFactory: NoSplash.splashFactory,
   dividerColor: darkDividerColor,
   dialogBackgroundColor: darkCardColor,
-  // textTheme: GoogleFonts.openSansTextTheme(ThemeData.dark().textTheme),
   popupMenuTheme: PopupMenuThemeData(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(6),

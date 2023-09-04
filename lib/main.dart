@@ -9,7 +9,10 @@ import 'package:pel_portal/pages/auth/auth_checker.dart';
 import 'package:pel_portal/pages/auth/login_page.dart';
 import 'package:pel_portal/pages/auth/register_page.dart';
 import 'package:pel_portal/pages/not_found_page.dart';
+import 'package:pel_portal/pages/onboarding/connections_onboarding_page.dart';
 import 'package:pel_portal/pages/onboarding/onboarding_page.dart';
+import 'package:pel_portal/pages/onboarding/school_onboarding_page.dart';
+import 'package:pel_portal/pages/onboarding/verification_onboarding_page.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/logger.dart';
 import 'package:pel_portal/utils/theme.dart';
@@ -59,6 +62,16 @@ Future<void> main() async {
   }));
   router.define("/auth/register", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return const RegisterPage();
+  }));
+
+  router.define("/onboarding/school", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const SchoolOnboardingPage();
+  }));
+  router.define("/onboarding/verification", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const VerificationOnboardingPage();
+  }));
+  router.define("/onboarding/connections", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const ConnectionsOnboardingPage();
   }));
 
   router.notFoundHandler = Handler(handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
