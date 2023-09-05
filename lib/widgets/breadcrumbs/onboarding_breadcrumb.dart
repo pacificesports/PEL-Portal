@@ -1,9 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:pel_portal/utils/config.dart';
-import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/theme.dart';
-import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 
 class OnboardingBreadcrumb extends StatefulWidget {
   const OnboardingBreadcrumb({super.key});

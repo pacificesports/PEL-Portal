@@ -562,7 +562,7 @@ class _SchoolOnboardingPageState extends State<SchoolOnboardingPage> {
                                                                       Theme.of(context).colorScheme.background.withOpacity(0.1),
                                                                       Theme.of(context).colorScheme.background,
                                                                     ],
-                                                                    stops: [0, 1]
+                                                                    stops: const [0, 1]
                                                                 )
                                                             ),
                                                           ),
