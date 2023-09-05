@@ -68,7 +68,7 @@ class PELTextButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: Container(
           padding: padding ??
-              const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 14),
+              const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 12),
           decoration: BoxDecoration(
             border: Border.all(
               color: color,

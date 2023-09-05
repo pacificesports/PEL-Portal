@@ -77,6 +77,7 @@ final ThemeData darkTheme = ThemeData(
   cardTheme: CardTheme(
     color: darkCardColor,
     elevation: 0,
+    clipBehavior: Clip.antiAlias,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   ),
   listTileTheme: ListTileThemeData(
