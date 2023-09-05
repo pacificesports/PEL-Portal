@@ -451,7 +451,21 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
                                                       title: Text("Enrollment Verification (${currentUser.school.school.name})"),
                                                       trailing: SizedBox(
                                                         height: 50,
-                                                        child: currentUser.verification.isVerified ? const Icon(Icons.check_circle_rounded, color: PEL_SUCCESS) : null,
+                                                        child: currentUser.verification.isVerified ? const Icon(Icons.check_circle_rounded, color: PEL_SUCCESS) : currentUser.verification.status == "REQUESTED" ? const Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Text("Pending Verification", style: TextStyle(color: PEL_WARNING, fontSize: 16)),
+                                                            Padding(padding: EdgeInsets.all(4)),
+                                                            Icon(Icons.circle, color: PEL_WARNING)
+                                                          ],
+                                                        ) : const Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Text("Verification Rejected", style: TextStyle(color: PEL_WARNING, fontSize: 16)),
+                                                            Padding(padding: EdgeInsets.all(4)),
+                                                            Icon(Icons.cancel_rounded, color: PEL_ERROR)
+                                                          ],
+                                                        )
                                                       )
                                                   ),
                                                   Visibility(
@@ -487,13 +501,13 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
                                                               children: [
                                                                 ListTile(
                                                                   title: const Text("Verification Type:"),
-                                                                  trailing: Text(currentUser.verification.type, style: TextStyle(fontSize: 16)),
+                                                                  trailing: Text(currentUser.verification.type, style: const TextStyle(fontSize: 16)),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 16, right: 16),
-                                                                  child: Container(
+                                                                  child: SizedBox(
                                                                     width: double.infinity,
-                                                                    child: Text(currentUser.verification.comments, style: TextStyle(fontSize: 16)),
+                                                                    child: Text(currentUser.verification.comments, style: const TextStyle(fontSize: 16)),
                                                                   ),
                                                                 ),
                                                               ],
