@@ -90,7 +90,10 @@ class _OnboardingBreadcrumbState extends State<OnboardingBreadcrumb> {
                     const Padding(padding: EdgeInsets.all(4)),
                     Visibility(
                       visible: currentUser.verification.status != "",
-                      child: Icon(Icons.check_circle_outline_rounded, color: currentUser.verification.status == "PENDING" ? PEL_WARNING : currentUser.verification.status == "REJECTED" ? PEL_ERROR : PEL_SUCCESS)
+                      child: Icon(
+                        currentUser.verification.status == "PENDING" ? Icons.circle_outlined : currentUser.verification.status == "REJECTED" ? Icons.cancel_outlined : Icons.check_circle_outline_rounded,
+                        color: currentUser.verification.status == "PENDING" ? PEL_WARNING : currentUser.verification.status == "REJECTED" ? PEL_ERROR : PEL_SUCCESS
+                      )
                     ),
                   ],
                 ),

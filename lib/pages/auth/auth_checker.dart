@@ -87,7 +87,7 @@ class _AuthCheckerState extends State<AuthChecker> {
             trace.stop();
             return;
           }
-          analyzeUser();
+          checkUserStatus();
         } catch (err) {
           Logger.error("[auth_checker_page] $err");
           trace.stop();
@@ -97,8 +97,8 @@ class _AuthCheckerState extends State<AuthChecker> {
     });
   }
 
-  void analyzeUser() {
-    Trace trace = FirebasePerformance.instance.newTrace("analyzeUser()");
+  void checkUserStatus() {
+    Trace trace = FirebasePerformance.instance.newTrace("checkUserStatus()");
     trace.start();
     if (currentUser.school.schoolID == "") {
       // User needs to set school
@@ -111,7 +111,13 @@ class _AuthCheckerState extends State<AuthChecker> {
       Future.delayed(Duration.zero, () => router.navigateTo(context, "/onboarding/connections", transition: TransitionType.fadeIn, replace: true, clearStack: true));
     } else {
       // User is good to go!
-      Future.delayed(Duration.zero, () => router.navigateTo(context, "/home", transition: TransitionType.fadeIn, replace: true, clearStack: true));
+      if (ModalRoute.of(context)!.settings.name!.contains("?route=")) {
+        String route = ModalRoute.of(context)!.settings.name!.split("?route=")[1];
+        String routeDecoded = Uri.decodeComponent(route);
+        Future.delayed(Duration.zero, () => router.navigateTo(context, routeDecoded, transition: TransitionType.fadeIn, replace: true, clearStack: true));
+      } else {
+        Future.delayed(Duration.zero, () => router.navigateTo(context, "/home", transition: TransitionType.fadeIn, replace: true, clearStack: true));
+      }
     }
     trace.stop();
   }

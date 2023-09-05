@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:firebase_performance/firebase_performance.dart';
+import 'package:fluro/fluro.dart';
 import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/logger.dart';
@@ -46,6 +47,14 @@ class AuthService {
   }
 
   static bool verifyUserSession(context, String path) {
-    return true;
+    if (currentUser.id == "") {
+      Logger.info("User info is missing, checking auth...");
+      Future.delayed(Duration.zero, () {
+        router.navigateTo(context, "/auth/check?route=${Uri.encodeComponent(path)}", clearStack: true, replace: true, transition: TransitionType.fadeIn);
+      });
+      return false;
+    } else {
+      return true;
+    }
   }
 }

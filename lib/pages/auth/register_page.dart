@@ -450,7 +450,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                     },
                                   ),
                                 ),
-                              )
+                              ),
+                              Container(
+                                width: double.infinity,
+                                padding: LH.hp(context),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text("Already have an account?", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                                    const Padding(padding: EdgeInsets.all(4)),
+                                    PELTextButton(
+                                      text: "Login",
+                                      style: PELTextButtonStyle.text,
+                                      onPressed: () {
+                                        router.navigateTo(context, "/auth/login", transition: TransitionType.fadeIn);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),

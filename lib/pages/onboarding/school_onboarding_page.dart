@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/theme.dart';
 import 'package:pel_portal/widgets/breadcrumbs/onboarding_breadcrumb.dart';
@@ -11,6 +12,15 @@ class SchoolOnboardingPage extends StatefulWidget {
 }
 
 class _SchoolOnboardingPageState extends State<SchoolOnboardingPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    if (AuthService.verifyUserSession(context, "/onboarding/school")) {
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
