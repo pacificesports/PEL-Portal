@@ -2,6 +2,10 @@ class Verification {
   String userID = "";
   String type = "";
   String fileURL = "";
+  /*
+  * Statuses:
+  *  - "", "REQUESTED", "REJECTED", "ACCEPTED"
+   */
   String status = "";
   String comments = "";
   bool isVerified = false;

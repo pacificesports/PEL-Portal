@@ -89,8 +89,8 @@ class _OnboardingBreadcrumbState extends State<OnboardingBreadcrumb> {
                     Visibility(
                       visible: currentUser.verification.status != "",
                       child: Icon(
-                        currentUser.verification.status == "PENDING" ? Icons.circle_outlined : currentUser.verification.status == "REJECTED" ? Icons.cancel_outlined : Icons.check_circle_outline_rounded,
-                        color: currentUser.verification.status == "PENDING" ? PEL_WARNING : currentUser.verification.status == "REJECTED" ? PEL_ERROR : PEL_SUCCESS
+                        currentUser.verification.status == "REQUESTED" ? Icons.circle_outlined : currentUser.verification.status == "REJECTED" ? Icons.cancel_outlined : Icons.check_circle_outline_rounded,
+                        color: currentUser.verification.status == "REQUESTED" ? PEL_WARNING : currentUser.verification.status == "REJECTED" ? PEL_ERROR : PEL_SUCCESS
                       )
                     ),
                   ],
@@ -118,7 +118,7 @@ class _OnboardingBreadcrumbState extends State<OnboardingBreadcrumb> {
                     const Text("Connections", style: TextStyle(fontSize: 16, color: Colors.white)),
                     const Padding(padding: EdgeInsets.all(4)),
                     Visibility(
-                        visible: currentUser.verification.status != "",
+                        visible: currentUser.connections.length > 4,
                         child: const Icon(Icons.check_circle_outline_rounded, color: PEL_SUCCESS)
                     ),
                   ],
