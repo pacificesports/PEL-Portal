@@ -1,10 +1,13 @@
+const defaultIconURL = "https://firebasestorage.googleapis.com/v0/b/pacific-esports.appspot.com/o/schools%2Fdefault.png?alt=media&token=1b1c77b9-df1c-4308-9019-d9b7fef32ea8";
+const defaultBannerURL = "https://firebasestorage.googleapis.com/v0/b/pacific-esports.appspot.com/o/schools%2Fdefault-banner.png?alt=media&token=fb2dbcfb-fac6-4364-b36b-18015f86b644";
+
 class School {
   String id = "";
   String name = "";
   String description = "";
   String website = "";
-  String iconURL = "";
-  String bannerURL = "";
+  String iconURL = defaultIconURL;
+  String bannerURL = defaultBannerURL;
   String type = "";
   String address = "";
   bool verified = false;

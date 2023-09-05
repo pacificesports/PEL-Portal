@@ -3,6 +3,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pel_portal/models/school.dart';
 import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/models/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';

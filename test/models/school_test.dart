@@ -9,8 +9,6 @@ void main() {
       expect(school.name, equals(""));
       expect(school.description, equals(""));
       expect(school.website, equals(""));
-      expect(school.iconURL, equals(""));
-      expect(school.bannerURL, equals(""));
       expect(school.type, equals(""));
       expect(school.address, equals(""));
       expect(school.verified, equals(false));

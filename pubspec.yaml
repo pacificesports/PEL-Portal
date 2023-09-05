@@ -46,7 +46,6 @@ dependencies:
   firebase_performance: ^0.9.1+1
   flutter_dotenv: ^5.0.2
   fluro: ^2.0.5
-  onesignal_flutter: ^5.0.0
   intl: ^0.18.1
   adaptive_theme: ^3.4.0
   shared_preferences: ^2.0.15
