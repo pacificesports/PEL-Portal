@@ -10,9 +10,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:material_text_fields/material_text_fields.dart';
 import 'package:material_text_fields/theme/material_text_field_theme.dart';
 import 'package:pel_portal/models/user.dart';
+import 'package:pel_portal/models/verification.dart';
 import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
@@ -127,7 +129,9 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
     Trace trace = FirebasePerformance.instance.newTrace("submitVerification()");
     await trace.start();
     currentUser.verification.userID = currentUser.id;
-    currentUser.verification.comments += "––––––\n${currentUser.firstName}: $comments";
+    if (comments != "") {
+      currentUser.verification.comments += "\n––––––\n${currentUser.firstName}: $comments";
+    }
     currentUser.verification.status = "REQUESTED";
     if (currentUser.verification.fileURL == "") {
       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "No file was uploaded. Please select a file and try again."));
@@ -136,10 +140,10 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
     setState(() => enrollmentVerificationLoading = true);
     try {
       await AuthService.getAuthToken();
-      var response = await httpClient.post(Uri.parse("$API_HOST/users/${currentUser.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(currentUser));
+      var response = await httpClient.post(Uri.parse("$API_HOST/users/${currentUser.id}/verification"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(currentUser.verification));
       if (response.statusCode == 200) {
         setState(() {
-          currentUser = User.fromJson(jsonDecode(response.body)["data"]);
+          currentUser.verification = Verification.fromJson(jsonDecode(response.body)["data"]);
         });
       } else {
         Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to submit verification!"));
@@ -380,6 +384,13 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
                                                                   ),
                                                                 ),
                                                                 Padding(
+                                                                  padding: const EdgeInsets.only(left: 16, right: 16),
+                                                                  child: SizedBox(
+                                                                    width: double.infinity,
+                                                                    child: Text(currentUser.verification.comments, style: const TextStyle(fontSize: 16)),
+                                                                  ),
+                                                                ),
+                                                                Padding(
                                                                   padding: const EdgeInsets.all(8.0),
                                                                   child: MaterialTextField(
                                                                     hint: "Enter any comments here.",
@@ -461,7 +472,7 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
                                                         ) : const Row(
                                                           mainAxisSize: MainAxisSize.min,
                                                           children: [
-                                                            Text("Verification Rejected", style: TextStyle(color: PEL_WARNING, fontSize: 16)),
+                                                            Text("Verification Rejected", style: TextStyle(color: PEL_ERROR, fontSize: 16)),
                                                             Padding(padding: EdgeInsets.all(4)),
                                                             Icon(Icons.cancel_rounded, color: PEL_ERROR)
                                                           ],
@@ -508,6 +519,59 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
                                                                   child: SizedBox(
                                                                     width: double.infinity,
                                                                     child: Text(currentUser.verification.comments, style: const TextStyle(fontSize: 16)),
+                                                                  ),
+                                                                ),
+                                                                Visibility(
+                                                                  visible: currentUser.verification.status == "REJECTED",
+                                                                  child: const Padding(
+                                                                    padding: EdgeInsets.only(left: 16, top: 8, right: 16),
+                                                                    child: SizedBox(
+                                                                      width: double.infinity,
+                                                                      child: Text(
+                                                                        "It looks like your verification request was rejected. Check out our comments above and submit another file.",
+                                                                        style: TextStyle(color: Colors.grey, fontSize: 16)
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Visibility(
+                                                                  visible: currentUser.verification.status == "REJECTED",
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                                                                    child: PELTextButton(
+                                                                      text: "Resubmit Verification",
+                                                                      onPressed: () {
+                                                                        setState(() {
+                                                                          currentUser.verification.status = "";
+                                                                          currentUser.verification.type = "";
+                                                                          currentUser.verification.fileURL = "";
+                                                                        });
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Visibility(
+                                                                  visible: currentUser.verification.status == "ACCEPTED",
+                                                                  child: Padding(
+                                                                    padding: EdgeInsets.only(left: 16, top: 8, right: 16),
+                                                                    child: SizedBox(
+                                                                      width: double.infinity,
+                                                                      child: Column(
+                                                                        children: [
+                                                                          Center(
+                                                                            child: Text(
+                                                                                "Accepted on ${DateFormat().format(currentUser.verification.updatedAt.toLocal())}.",
+                                                                                style: TextStyle(color: PEL_SUCCESS, fontSize: 16)
+                                                                            ),
+                                                                          ),
+                                                                          const Padding(padding: EdgeInsets.all(4)),
+                                                                          Text(
+                                                                              "Congratulations, your verification request was accepted! You can now add connections and join teams.",
+                                                                              style: TextStyle(color: Colors.grey, fontSize: 16)
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],

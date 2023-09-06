@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/theme.dart';
@@ -14,6 +15,21 @@ class ConnectionsOnboardingPage extends StatefulWidget {
 }
 
 class _ConnectionsOnboardingPageState extends State<ConnectionsOnboardingPage> {
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (AuthService.verifyUserSession(context, "/onboarding/connections")) {
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
