@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:material_text_fields/material_text_fields.dart';
 import 'package:material_text_fields/theme/material_text_field_theme.dart';
-import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/models/verification.dart';
 import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
@@ -553,7 +552,7 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
                                                                 Visibility(
                                                                   visible: currentUser.verification.status == "ACCEPTED",
                                                                   child: Padding(
-                                                                    padding: EdgeInsets.only(left: 16, top: 8, right: 16),
+                                                                    padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
                                                                     child: SizedBox(
                                                                       width: double.infinity,
                                                                       child: Column(
@@ -561,11 +560,11 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
                                                                           Center(
                                                                             child: Text(
                                                                                 "Accepted on ${DateFormat().format(currentUser.verification.updatedAt.toLocal())}.",
-                                                                                style: TextStyle(color: PEL_SUCCESS, fontSize: 16)
+                                                                                style: const TextStyle(color: PEL_SUCCESS, fontSize: 16)
                                                                             ),
                                                                           ),
                                                                           const Padding(padding: EdgeInsets.all(4)),
-                                                                          Text(
+                                                                          const Text(
                                                                               "Congratulations, your verification request was accepted! You can now add connections and join teams.",
                                                                               style: TextStyle(color: Colors.grey, fontSize: 16)
                                                                           ),
