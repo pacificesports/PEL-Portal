@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pel_portal/models/connection.dart';
 import 'package:pel_portal/models/user.dart';
 
 void main() {
@@ -71,6 +72,20 @@ void main() {
       user.updatedAt = DateTime.parse("0001-01-01T00:00:00Z");
       user.createdAt = DateTime.parse("0001-01-01T00:00:00Z");
       expect(user.toJson()["id"], equals(""));
+    });
+    test("Test User.getConnection()", () {
+      User user = User();
+      user.connections = [
+        Connection.fromJson({
+          "user_id": "userID",
+          "key": "key",
+          "name": "name",
+          "connection": "connection",
+          "created_at": "0001-01-01T00:00:00Z"
+        })
+      ];
+      expect(user.getConnection("key").connection, equals(user.connections[0].connection));
+      expect(user.getConnection("key_not_found").connection, equals(""));
     });
     test("Test User.toString()", () {
       User user = User();
