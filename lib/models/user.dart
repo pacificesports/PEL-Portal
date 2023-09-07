@@ -47,6 +47,15 @@ class User {
     createdAt = DateTime.tryParse(json["created_at"] ?? "") ?? DateTime.now().toUtc();
   }
 
+  Connection getConnection(String key) {
+    for (int i = 0; i < connections.length; i++) {
+      if (connections[i].key == key) {
+        return connections[i];
+      }
+    }
+    return Connection();
+  }
+
   Map<String, dynamic> toJson() {
     return {
       "id": id,
