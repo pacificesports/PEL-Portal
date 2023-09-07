@@ -28,7 +28,16 @@ jobs:
           channel: 'stable'
       - name: Get Dependencies
         run: flutter pub get
+      - name: Generate full coverage files
+        run: dart pub global activate full_coverage && dart pub global run full_coverage
       - name: Analyze
         run: flutter analyze
       - name: Test
         run: flutter test --coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: ./coverage/lcov.info
+          verbose: true

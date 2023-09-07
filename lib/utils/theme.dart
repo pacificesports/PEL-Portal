@@ -1,41 +1,42 @@
 // ignore_for_file: non_constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:material_text_fields/theme/material_text_field_theme.dart';
 
-Color SB_NAVY = const Color(0xFF003660);
-Color SB_GOLD = const Color(0xFFfebc11);
+const Color PEL_MAIN = Color(0xFF6F4ACB);
 
-Color SB_LT_BLUE = const Color(0xFF0098ff);
-Color SB_RED = const Color(0xFFf33535);
-Color SB_AMBER = const Color(0xFFffca28);
-Color SB_GREEN = const Color(0xFF00ca70);
+const Color PEL_BLUE = Color(0xFF087CFF);
+const Color PEL_PURPLE = Color(0xFF6F4ACB);
+const Color PEL_GREY = Color(0xFF121212);
 
-List<Color> SB_COLORS = [SB_NAVY, SB_GOLD, SB_LT_BLUE, SB_RED, SB_AMBER, SB_GREEN];
+// COLORS
+const Color PEL_SUCCESS = Color(0xFF83D05D);
+const Color PEL_WARNING = Color(0xFFEDC25E);
+const Color PEL_ERROR = Color(0xFFE23645);
 
 // LIGHT THEME
-const lightTextColor = Colors.black;
 const lightBackgroundColor = Color(0xFFf9f9f9);
 const lightCardColor = Colors.white;
 const lightDividerColor = Color(0xFFA8A8A8);
 
 // Dark theme
-const darkTextColor = Color(0xFFFFFFFF);
-const darkBackgroundColor = Color(0xFF1F1F1F);
-const darkCanvasColor = Color(0xFF242424);
-const darkCardColor = Color(0xFF272727);
+const darkBackgroundColor = Color(0xFF100F1D);
+const darkCanvasColor = Color(0xFF090910);
+const darkCardColor = Color(0xFF090910);
 const darkDividerColor = Color(0xFF545454);
 
 /// Light style
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light().copyWith(
-    primary: SB_NAVY,
-    secondary: SB_NAVY,
+    primary: PEL_MAIN,
+    secondary: PEL_MAIN,
     onSecondary: Colors.white,
     background: lightBackgroundColor,
   ),
-  fontFamily: "Product Sans",
-  primaryColor: SB_NAVY,
+  fontFamily: "Helvetica",
+  primaryColor: PEL_MAIN,
   scaffoldBackgroundColor: lightBackgroundColor,
   cardColor: lightCardColor,
   cardTheme: CardTheme(
@@ -64,18 +65,19 @@ final ThemeData darkTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
   colorScheme: const ColorScheme.dark().copyWith(
-    primary: SB_NAVY,
-    secondary: SB_NAVY,
+    primary: PEL_MAIN,
+    secondary: PEL_MAIN,
     background: darkBackgroundColor,
   ),
-  fontFamily: "Product Sans",
-  primaryColor: SB_NAVY,
+  fontFamily: "Helvetica",
+  primaryColor: PEL_MAIN,
   canvasColor: darkCanvasColor,
   scaffoldBackgroundColor: darkBackgroundColor,
   cardColor: darkCardColor,
   cardTheme: CardTheme(
     color: darkCardColor,
     elevation: 0,
+    clipBehavior: Clip.antiAlias,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   ),
   listTileTheme: ListTileThemeData(
@@ -84,9 +86,15 @@ final ThemeData darkTheme = ThemeData(
   buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
   ),
+  inputDecorationTheme: FilledOrOutlinedTextTheme(
+    radius: 8,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+    fillColor: darkBackgroundColor,
+    prefixIconColor: PEL_MAIN,
+  ),
+  splashFactory: NoSplash.splashFactory,
   dividerColor: darkDividerColor,
   dialogBackgroundColor: darkCardColor,
-  // textTheme: GoogleFonts.openSansTextTheme(ThemeData.dark().textTheme),
   popupMenuTheme: PopupMenuThemeData(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(6),
