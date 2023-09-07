@@ -48,10 +48,6 @@ Future<void> main() async {
   log("Initialized default app ${app.name}");
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
-  // Remove this method to stop OneSignal Debugging
-  // OneSignal.shared.setLogLevel(OSLogLevel.debug, OSLogLevel.none);
-  // OneSignal.shared.setAppId(ONESIGNAL_APP_ID);
-
   // ROUTE DEFINITIONS
   router.define("/", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return const OnboardingPage();
