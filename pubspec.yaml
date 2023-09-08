@@ -101,6 +101,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
+    - staticwebapp.config.json
     - assets/images/
     - assets/images/icons/
     - assets/images/pel_icons/
