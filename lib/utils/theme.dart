@@ -26,40 +26,6 @@ const darkCanvasColor = Color(0xFF090910);
 const darkCardColor = Color(0xFF090910);
 const darkDividerColor = Color(0xFF545454);
 
-/// Light style
-final ThemeData lightTheme = ThemeData(
-  brightness: Brightness.light,
-  colorScheme: const ColorScheme.light().copyWith(
-    primary: PEL_MAIN,
-    secondary: PEL_MAIN,
-    onSecondary: Colors.white,
-    background: lightBackgroundColor,
-  ),
-  fontFamily: "Helvetica",
-  primaryColor: PEL_MAIN,
-  scaffoldBackgroundColor: lightBackgroundColor,
-  cardColor: lightCardColor,
-  cardTheme: CardTheme(
-    color: lightCardColor,
-    elevation: 0,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-  ),
-  listTileTheme: ListTileThemeData(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-  ),
-  buttonTheme: ButtonThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
-  ),
-  dividerColor: lightDividerColor,
-  dialogBackgroundColor: lightCardColor,
-  // textTheme: GoogleFonts.openSansTextTheme(ThemeData.light().textTheme),
-  popupMenuTheme: PopupMenuThemeData(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-  ),
-);
-
 /// Dark style
 final ThemeData darkTheme = ThemeData(
   useMaterial3: true,

@@ -83,7 +83,7 @@ Future<void> main() async {
 
   usePathUrlStrategy();
   runApp(AdaptiveTheme(
-    light: lightTheme,
+    light: darkTheme,
     dark: darkTheme,
     initial: AdaptiveThemeMode.dark,
     builder: (theme, darkTheme) =>
