@@ -237,12 +237,15 @@ class _ConnectionsOnboardingPageState extends State<ConnectionsOnboardingPage> {
                                     },
                                   ),
                                   const Padding(padding: EdgeInsets.all(4)),
-                                  PELTextButton(
-                                    text: "Done",
-                                    style: currentUser.connections.length > 4 ? PELTextButtonStyle.filled : PELTextButtonStyle.outlined,
-                                    onPressed: () {
-                                      router.navigateTo(context, "/auth/check", transition: TransitionType.fadeIn);
-                                    },
+                                  Visibility(
+                                    visible: currentUser.verification.isVerified && currentUser.verification.isEmailVerified,
+                                    child: PELTextButton(
+                                      text: "Done",
+                                      style: currentUser.connections.length > 4 ? PELTextButtonStyle.filled : PELTextButtonStyle.outlined,
+                                      onPressed: () {
+                                        router.navigateTo(context, "/auth/check", transition: TransitionType.fadeIn);
+                                      },
+                                    ),
                                   )
                                 ],
                               )
