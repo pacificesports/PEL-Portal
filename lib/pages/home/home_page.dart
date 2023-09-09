@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pel_portal/utils/auth_service.dart';
-import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
-import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 import 'package:pel_portal/widgets/headers/portal_header.dart';
 
 class HomePage extends StatefulWidget {

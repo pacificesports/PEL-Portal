@@ -1,8 +1,6 @@
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:pel_portal/pages/home/home_page_mobile.dart';
 import 'package:pel_portal/utils/auth_service.dart';
-import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/theme.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 

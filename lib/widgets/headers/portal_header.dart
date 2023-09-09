@@ -6,7 +6,6 @@ import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/theme.dart';
-import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 
 class PortalHeader extends StatefulWidget {
   const PortalHeader({super.key});
