@@ -106,7 +106,7 @@ class _AuthCheckerState extends State<AuthChecker> {
     } else if (currentUser.verification.status == "" || currentUser.verification.status == "REJECTED") {
       // Verification is empty or was rejected (needs immediate attention)
       Future.delayed(Duration.zero, () => router.navigateTo(context, "/onboarding/verification", transition: TransitionType.fadeIn, replace: true, clearStack: true));
-    } else if (currentUser.connections.length == 4 && !currentUser.verification.isVerified) {
+    } else if (currentUser.connections.length == 4 || !currentUser.verification.isVerified || !currentUser.verification.isEmailVerified) {
       // Only the default 4 discord connections, let user add more while waiting for verification
       Future.delayed(Duration.zero, () => router.navigateTo(context, "/onboarding/connections", transition: TransitionType.fadeIn, replace: true, clearStack: true));
     } else {
