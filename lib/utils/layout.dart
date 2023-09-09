@@ -16,7 +16,7 @@ class LayoutHelper {
   static const double _desktopContentWidth = 1400;
   static const double _desktopPadding = 32;
 
-  static const double _mobileMaxWidth = 600;
+  static const double _mobileMaxWidth = 800;
   static const double _mobilePadding = 8;
 
   static double width(context) => MediaQuery.of(context).size.width;
