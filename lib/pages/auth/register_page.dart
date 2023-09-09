@@ -163,9 +163,9 @@ class _RegisterPageState extends State<RegisterPage> {
      var loginResponse = await httpClient.post(Uri.parse("$API_HOST/auth/login/$discordID"), headers: {"PEL-API-KEY": PEL_API_KEY});
      if (loginResponse.statusCode != 200) {
        setState(() {loading = false;});
-       Logger.error("[register_page] Error occured while creating account. ${loginResponse.body}");
+       Logger.error("[register_page] Error occurred while creating account. ${loginResponse.body}");
        Future.delayed(Duration.zero, () {
-         AlertService.showErrorSnackbar(context, "Error occured while creating account. ${loginResponse.body}");
+         AlertService.showErrorSnackbar(context, "Error occurred while creating account. ${loginResponse.body}");
        });
        return;
      }
@@ -195,6 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
       registerUser.firstName = firstName;
       registerUser.lastName = lastName;
       registerUser.email = email;
+      registerUser.profilePictureURL = discordProfilePicture;
       registerUser.privacy.userID = authResult.user!.uid;
       registerUser.connections.add(Connection.fromJson({
         "user_id": authResult.user!.uid,
@@ -384,7 +385,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             ClipRRect(
                                               borderRadius: BorderRadius.circular(512),
                                               child: ExtendedImage.network(
-                                                "https://cdn.discordapp.com/avatars/348220961155448833/1bedb626ddb6b5a712ee3b172e442eff.png",
+                                                discordProfilePicture,
                                                 height: 65,
                                                 width: 65,
                                               ),

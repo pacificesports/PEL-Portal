@@ -83,21 +83,21 @@ Future<void> main() async {
 
   usePathUrlStrategy();
   runApp(AdaptiveTheme(
-    light: lightTheme,
+    light: darkTheme,
     dark: darkTheme,
     initial: AdaptiveThemeMode.dark,
     builder: (theme, darkTheme) =>
-        MaterialApp(
-          title: "PEL Portal",
-          initialRoute: kIsWeb ? "/" : "/auth/check",
-          onGenerateRoute: router.generator,
-          theme: theme,
-          darkTheme: darkTheme,
-          debugShowCheckedModeBanner: false,
-          navigatorObservers: [
-            routeObserver,
-            FirebaseAnalyticsObserver(analytics: analytics),
-          ],
-        ),
+      MaterialApp(
+        title: "PEL Portal",
+        initialRoute: kIsWeb ? "/" : "/auth/check",
+        onGenerateRoute: router.generator,
+        theme: theme,
+        darkTheme: darkTheme,
+        debugShowCheckedModeBanner: false,
+        navigatorObservers: [
+          routeObserver,
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
+      ),
   ));
 }
