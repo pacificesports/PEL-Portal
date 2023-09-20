@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/layout.dart';
-import 'package:pel_portal/widgets/headers/portal_header.dart';
+import 'package:pel_portal/widgets/headers/portal_home_header.dart';
+import 'package:pel_portal/widgets/home/no_organization_card.dart';
+import 'package:pel_portal/widgets/home/no_teams_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const PortalHeader(),
+            const PortalHomeHeader(),
             Container(
               padding: LH.p(context),
               width: LH.cw(context),
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
                     child: const Text(
-                      "Pacific Esports Tournaments",
+                      "My Teams",
                       style: TextStyle(
                         fontSize: 32,
                         fontFamily: "Helvetica",
@@ -50,68 +52,22 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 300,
-                    padding: EdgeInsets.only(top: LH.hpd(context)),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Card(
-                            child: Container(
-                              padding: LH.p(context),
-                              child: const Stack(
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                          "Redwood Rumble",
-                                          style: TextStyle(
-                                            fontSize: 32,
-                                            fontFamily: "Helvetica",
-                                            fontWeight: FontWeight.bold,
-                                          )
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(padding: EdgeInsets.only(left: LH.hpd(context))),
-                        Expanded(
-                          child: Card(
-                            child: Container(
-                              padding: LH.p(context),
-                              child: const Stack(
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                          "California Clash",
-                                          style: TextStyle(
-                                            fontSize: 32,
-                                            fontFamily: "Helvetica",
-                                            fontWeight: FontWeight.bold,
-                                          )
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                  const NoTeamsCard(),
+                  Padding(
+                    padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
+                    child: const Text(
+                      "My Organizations",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontFamily: "Helvetica",
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
+                  const NoOrganizationCard()
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

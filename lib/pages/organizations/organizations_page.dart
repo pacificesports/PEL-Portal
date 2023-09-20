@@ -4,14 +4,14 @@ import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/widgets/headers/portal_header.dart';
 import 'package:pel_portal/widgets/headers/portal_home_header.dart';
 
-class TeamsPage extends StatefulWidget {
-  const TeamsPage({super.key});
+class OrganizationsPage extends StatefulWidget {
+  const OrganizationsPage({super.key});
 
   @override
-  State<TeamsPage> createState() => _TeamsPageState();
+  State<OrganizationsPage> createState() => _OrganizationsPageState();
 }
 
-class _TeamsPageState extends State<TeamsPage> {
+class _OrganizationsPageState extends State<OrganizationsPage> {
 
   @override
   void setState(fn) {
@@ -23,7 +23,7 @@ class _TeamsPageState extends State<TeamsPage> {
   @override
   void initState() {
     super.initState();
-    if (AuthService.verifyUserSession(context, "/teams")) {
+    if (AuthService.verifyUserSession(context, "/organizations")) {
     }
   }
 
@@ -43,7 +43,7 @@ class _TeamsPageState extends State<TeamsPage> {
                   Padding(
                     padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
                     child: const Text(
-                      "Teams",
+                      "Organizations",
                       style: TextStyle(
                         fontSize: 32,
                         fontFamily: "Helvetica",

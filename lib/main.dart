@@ -15,6 +15,9 @@ import 'package:pel_portal/pages/onboarding/connections_onboarding_page.dart';
 import 'package:pel_portal/pages/onboarding/onboarding_page.dart';
 import 'package:pel_portal/pages/onboarding/school_onboarding_page.dart';
 import 'package:pel_portal/pages/onboarding/verification_onboarding_page.dart';
+import 'package:pel_portal/pages/organizations/new_organization_page.dart';
+import 'package:pel_portal/pages/organizations/organizations_page.dart';
+import 'package:pel_portal/pages/teams/teams_page.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/logger.dart';
@@ -75,6 +78,17 @@ Future<void> main() async {
 
   router.define("/home", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return (LayoutHelper.isMobile(context)) ? const MobileNavigationController() : const HomePage();
+  }));
+
+  router.define("/teams", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const TeamsPage();
+  }));
+
+  router.define("/organizations", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const OrganizationsPage();
+  }));
+  router.define("/organizations/new", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const NewOrganizationPage();
   }));
 
   router.notFoundHandler = Handler(handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
