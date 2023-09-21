@@ -7,14 +7,14 @@ import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/theme.dart';
 
-class PortalHeader extends StatefulWidget {
-  const PortalHeader({super.key});
+class PortalHomeHeader extends StatefulWidget {
+  const PortalHomeHeader({super.key});
 
   @override
-  State<PortalHeader> createState() => _PortalHeaderState();
+  State<PortalHomeHeader> createState() => _PortalHomeHeaderState();
 }
 
-class _PortalHeaderState extends State<PortalHeader> {
+class _PortalHomeHeaderState extends State<PortalHomeHeader> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,17 +28,16 @@ class _PortalHeaderState extends State<PortalHeader> {
             fit: StackFit.expand,
             alignment: Alignment.center,
             children: [
+              SvgPicture.asset(
+                "assets/images/pel_abbrev/abbrev-mono.svg",
+                height: 75,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      router.navigateTo(context, "/home", transition: TransitionType.fadeIn);
-                    },
-                    child: SvgPicture.asset(
-                      "assets/images/pel_abbrev/abbrev-mono.svg",
-                      height: 75,
-                    ),
+                  Text(
+                    "Welcome, ${currentUser.firstName}!",
+                    style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -93,8 +92,8 @@ class _PortalHeaderState extends State<PortalHeader> {
                                 child: Row(
                                   children: [
                                     SizedBox(
-                                        width: 35,
-                                        child: Icon(Icons.settings_outlined, color: PEL_MAIN)
+                                      width: 35,
+                                      child: Icon(Icons.settings_outlined, color: PEL_MAIN)
                                     ),
                                     Padding(padding: EdgeInsets.only(right: 16)),
                                     Text("Account Settings", style: TextStyle(fontSize: 16)),

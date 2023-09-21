@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:fluro/fluro.dart';
+import 'package:pel_portal/models/organization.dart';
+import 'package:pel_portal/models/team.dart';
 import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/logger.dart';
@@ -22,6 +24,20 @@ class AuthService {
       log("LAST NAME: ${currentUser.lastName}");
       log("EMAIL: ${currentUser.email}");
       log("====== =============== ======");
+      await AuthService.getAuthToken();
+      response = await httpClient.get(Uri.parse("$API_HOST/users/organizations/$id"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+      if (response.statusCode == 200) {
+        currentOrganizations = jsonDecode(response.body)["data"].map<Organization>((json) => Organization.fromJson(json)).toList();
+      } else {
+        log("Failed to get organizations for user $id");
+      }
+      await AuthService.getAuthToken();
+      response = await httpClient.get(Uri.parse("$API_HOST/users/teams/$id"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+      if (response.statusCode == 200) {
+        currentTeams = jsonDecode(response.body)["data"].map<Team>((json) => Team.fromJson(json)).toList();
+      } else {
+        log("Failed to get teams for user $id");
+      }
     }
     else {
       // logged but not user data found!

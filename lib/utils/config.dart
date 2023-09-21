@@ -3,6 +3,8 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pel_portal/models/organization.dart';
+import 'package:pel_portal/models/team.dart';
 import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/models/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,3 +30,5 @@ String DISCORD_CLIENT_SECRET = "discord-client-secret";
 String DISCORD_REDIRECT_URI = "discord-redirect-uri";
 
 User currentUser = User();
+List<Organization> currentOrganizations = [];
+List<Team> currentTeams = [];
