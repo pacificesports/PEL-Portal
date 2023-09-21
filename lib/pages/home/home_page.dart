@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
-import 'package:pel_portal/utils/theme.dart';
 import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 import 'package:pel_portal/widgets/headers/portal_home_header.dart';
-import 'package:pel_portal/widgets/home/no_organization_card.dart';
 import 'package:pel_portal/widgets/home/no_teams_card.dart';
 
 class HomePage extends StatefulWidget {

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:extended_image/extended_image.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:pel_portal/models/organization.dart';
 import 'package:pel_portal/utils/alert_service.dart';
@@ -473,7 +472,7 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text("${user.user.firstName} ${user.user.lastName}", style: const TextStyle(fontSize: 22, color: Colors.white)),
-                                                    Text("Pending", style: const TextStyle(fontSize: 18, color: PEL_WARNING)),
+                                                    const Text("Pending", style: TextStyle(fontSize: 18, color: PEL_WARNING)),
                                                   ],
                                                 ),
                                               ),

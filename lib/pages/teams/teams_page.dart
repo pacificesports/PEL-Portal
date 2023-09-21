@@ -15,7 +15,6 @@ import 'package:pel_portal/utils/logger.dart';
 import 'package:pel_portal/utils/theme.dart';
 import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 import 'package:pel_portal/widgets/headers/portal_header.dart';
-import 'package:pel_portal/widgets/headers/portal_home_header.dart';
 
 class TeamsPage extends StatefulWidget {
   const TeamsPage({super.key});

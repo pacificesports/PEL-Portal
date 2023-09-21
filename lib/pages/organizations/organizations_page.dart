@@ -11,7 +11,6 @@ import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/logger.dart';
 import 'package:pel_portal/utils/theme.dart';
 import 'package:pel_portal/widgets/headers/portal_header.dart';
-import 'package:pel_portal/widgets/headers/portal_home_header.dart';
 
 class OrganizationsPage extends StatefulWidget {
   const OrganizationsPage({super.key});

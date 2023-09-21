@@ -9,7 +9,6 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:material_text_fields/material_text_fields.dart';
 import 'package:pel_portal/models/team.dart';
-import 'package:pel_portal/pages/teams/edit_team_user_dialog.dart';
 import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
@@ -18,7 +17,6 @@ import 'package:pel_portal/utils/logger.dart';
 import 'package:pel_portal/utils/theme.dart';
 import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 import 'package:pel_portal/widgets/headers/portal_header.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class EditTeamPage extends StatefulWidget {
   final String id;

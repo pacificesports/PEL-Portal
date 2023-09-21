@@ -9,7 +9,6 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:material_text_fields/material_text_fields.dart';
-import 'package:pel_portal/models/organization.dart';
 import 'package:pel_portal/models/team.dart';
 import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
