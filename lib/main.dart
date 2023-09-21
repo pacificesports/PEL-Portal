@@ -18,6 +18,9 @@ import 'package:pel_portal/pages/onboarding/verification_onboarding_page.dart';
 import 'package:pel_portal/pages/organizations/new_organization_page.dart';
 import 'package:pel_portal/pages/organizations/organization_details_page.dart';
 import 'package:pel_portal/pages/organizations/organizations_page.dart';
+import 'package:pel_portal/pages/teams/edit_team_page.dart';
+import 'package:pel_portal/pages/teams/new_team_page.dart';
+import 'package:pel_portal/pages/teams/team_details_page.dart';
 import 'package:pel_portal/pages/teams/teams_page.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
@@ -34,7 +37,9 @@ Future<void> main() async {
   ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
     return const Scaffold(
         body: Center(
-            child: Text("Unexpected error. See log for details.")));
+          child: RefreshProgressIndicator(backgroundColor: PEL_MAIN, color: Colors.white),
+        )
+    );
   };
 
   await dotenv.load(fileName: ".env");
@@ -83,6 +88,15 @@ Future<void> main() async {
 
   router.define("/teams", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return const TeamsPage();
+  }));
+  router.define("/teams/new", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const NewTeamPage();
+  }));
+  router.define("/teams/:id", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return TeamDetailsPage(id: params!["id"][0]);
+  }));
+  router.define("/teams/:id/edit", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return EditTeamPage(id: params!["id"][0]);
   }));
 
   router.define("/organizations", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {

@@ -98,7 +98,7 @@ class _EditOrganizationUserDialogState extends State<EditOrganizationUserDialog>
               MaterialTextField(
                 keyboardType: TextInputType.name,
                 hint: "Title",
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
                 controller: titleController,
                 prefixIcon: const Icon(Icons.badge_rounded),
                 onChanged: (value) {

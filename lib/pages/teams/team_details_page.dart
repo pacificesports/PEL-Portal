@@ -3,29 +3,30 @@ import 'dart:convert';
 import 'package:extended_image/extended_image.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:pel_portal/models/organization.dart';
+import 'package:pel_portal/models/team.dart';
+import 'package:pel_portal/pages/teams/edit_team_user_dialog.dart';
 import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/logger.dart';
 import 'package:pel_portal/utils/theme.dart';
+import 'package:pel_portal/widgets/buttons/pel_text_button.dart';
 import 'package:pel_portal/widgets/headers/portal_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'edit_organization_user_dialog.dart';
-
-class OrganizationDetailsPage extends StatefulWidget {
+class TeamDetailsPage extends StatefulWidget {
   final String id;
-  const OrganizationDetailsPage({super.key, required this.id});
+  const TeamDetailsPage({super.key, required this.id});
 
   @override
-  State<OrganizationDetailsPage> createState() => _OrganizationDetailsPageState();
+  State<TeamDetailsPage> createState() => _TeamDetailsPageState();
 }
 
-class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
+class _TeamDetailsPageState extends State<TeamDetailsPage> {
 
-  Organization organization = Organization();
+  Team team = Team();
+  bool joinLoading = false;
 
   @override
   void setState(fn) {
@@ -37,27 +38,57 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
   @override
   void initState() {
     super.initState();
-    if (AuthService.verifyUserSession(context, "/organizations/${widget.id}")) {
-      getOrganizations();
+    if (AuthService.verifyUserSession(context, "/teams/${widget.id}")) {
+      getTeams();
     }
   }
 
-  Future<void> getOrganizations() async {
+  Future<void> getTeams() async {
     try {
       await AuthService.getAuthToken();
-      var response = await httpClient.get(Uri.parse("$API_HOST/organizations/${widget.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+      var response = await httpClient.get(Uri.parse("$API_HOST/teams/${widget.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
       setState(() {
-        organization = Organization.fromJson(jsonDecode(response.body)["data"]);
+        team = Team.fromJson(jsonDecode(response.body)["data"]);
       });
       await AuthService.getAuthToken();
-      response = await httpClient.get(Uri.parse("$API_HOST/organizations/${widget.id}/users"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+      response = await httpClient.get(Uri.parse("$API_HOST/teams/${widget.id}/users"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
       setState(() {
-        organization.users = List<OrganizationUser>.from(jsonDecode(response.body)["data"].map((x) => OrganizationUser.fromJson(x)));
+        team.users = List<TeamUser>.from(jsonDecode(response.body)["data"].map((x) => TeamUser.fromJson(x)));
       });
     } catch(err) {
-      Logger.info("[organization_details_page] Error getting organization: $err");
-      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to get organization!"));
+      Logger.info("[team_details_page] Error getting team: $err");
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to get team!"));
     }
+  }
+
+  Future<void> joinTeam() async {
+    setState(() => joinLoading = true);
+    try {
+      TeamUser teamUser = TeamUser();
+      teamUser.teamID = team.id;
+      teamUser.userID = currentUser.id;
+      teamUser.title = "Member";
+      teamUser.roles = ["PENDING"];
+      await AuthService.getAuthToken();
+      var response = await httpClient.post(Uri.parse("$API_HOST/teams/${team.id}/users"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(teamUser));
+      if (response.statusCode == 200) {
+        await AuthService.getAuthToken();
+        response = await httpClient.post(Uri.parse("$API_HOST/teams/${team.id}/users/${currentUser.id}/roles"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(teamUser.roles));
+        if (response.statusCode == 200) {
+          Future.delayed(Duration.zero, () => AlertService.showSuccessSnackbar(context, "Team joined successfully!"));
+          Future.delayed(Duration.zero, () => router.navigateTo(context, "/teams/${team.id}", transition: TransitionType.fadeIn));
+        } else {
+          Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to add user to team!"));
+        }
+      } else {
+        Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to add user to team!"));
+      }
+    } catch(err) {
+      Logger.info("[team_details_page] Error joining team: $err");
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to join team!"));
+      setState(() => joinLoading = false);
+    }
+    setState(() => joinLoading = false);
   }
 
   @override
@@ -81,16 +112,16 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                       alignment: Alignment.bottomLeft,
                       children: [
                         SizedBox(
-                          height: 350,
+                          height: 250,
                           width: LH.cw(context),
                           child: ExtendedImage.network(
-                            organization.bannerURL,
+                            team.bannerURL == "" ? defaultBannerURL : team.bannerURL,
                             fit: BoxFit.cover,
                             width: double.infinity,
                           ),
                         ),
                         Container(
-                          height: 350,
+                          height: 250,
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                   begin: FractionalOffset.topCenter,
@@ -104,59 +135,97 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                           ),
                         ),
                         Container(
-                          height: 350,
+                          height: 250,
                           width: LH.cw(context),
                           padding: const EdgeInsets.all(32),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Visibility(
-                                visible: organization.verified,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Card(
-                                      child: InkWell(
-                                        onTap: () {
-                                          AlertService.showInfoSnackbar(context, "This organization has been verified by PEL.");
-                                        },
-                                        child: const Padding(
-                                          padding: EdgeInsets.only(left: 16, right: 16, top: 8.0, bottom: 8.0),
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.verified_rounded, color: PEL_MAIN),
-                                              Padding(padding: EdgeInsets.all(4)),
-                                              Text("Verified", style: TextStyle(fontSize: 16, color: Colors.grey)),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                              ClipRRect(
+                                borderRadius: const BorderRadius.all(Radius.circular(512)),
+                                child: ExtendedImage.network(
+                                  team.iconURL,
+                                  fit: BoxFit.cover,
+                                  width: 65,
+                                  height: 65,
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.all(Radius.circular(512)),
-                                    child: ExtendedImage.network(
-                                      organization.iconURL,
-                                      fit: BoxFit.cover,
-                                      width: 65,
-                                      height: 65,
-                                    ),
-                                  ),
-                                  const Padding(padding: EdgeInsets.all(8)),
-                                  Expanded(child: Text(organization.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white)),),
-                                ],
-                              ),
+                              const Padding(padding: EdgeInsets.all(8)),
+                              Expanded(child: Text(team.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white)),),
                             ],
                           ),
                         ),
                       ],
                     ),
+                  ),
+                  Padding(padding: LH.hp(context) / 2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Card(
+                        child: Row(
+                          children: [
+                            Card(
+                              child: InkWell(
+                                onTap: () {
+                                  router.navigateTo(context, "/home", transition: TransitionType.fadeIn);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Home", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                                ),
+                              ),
+                            ),
+                            const Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey, size: 16),
+                            Card(
+                              child: InkWell(
+                                onTap: () {
+                                  router.navigateTo(context, "/teams", transition: TransitionType.fadeIn);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Teams", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                                ),
+                              ),
+                            ),
+                            const Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey, size: 16),
+                            Card(
+                              child: InkWell(
+                                onTap: () {},
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Details", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Visibility(
+                            visible: team.users.firstWhere((element) => element.userID == currentUser.id).roles.any((element) => ["ADMIN", "CAPTAIN", "EDITOR"].contains(element)),
+                            child: PELTextButton(
+                              text: "Edit Team",
+                              style: PELTextButtonStyle.outlined,
+                              onPressed: () {
+                                router.navigateTo(context, "/teams/${team.id}/edit", transition: TransitionType.fadeIn);
+                              },
+                            )
+                          ),
+                          Visibility(
+                              visible: !team.users.any((element) => element.userID == currentUser.id),
+                              child: PELTextButton(
+                                text: "Join Team",
+                                onPressed: () {
+                                  joinTeam();
+                                },
+                              )
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   Padding(padding: LH.hp(context) / 2),
                   Row(
@@ -192,7 +261,7 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                organization.bio != "" ? organization.bio : "No bio.",
+                                                team.bio != "" ? team.bio : "No bio.",
                                                 style: const TextStyle(fontSize: 22, color: Colors.grey),
                                               ),
                                             ],
@@ -202,11 +271,11 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Visibility(
-                                              visible: organization.website != "",
+                                              visible: team.website != "",
                                               child: Card(
                                                 child: InkWell(
                                                   onTap: () {
-                                                    launchUrlString(organization.website);
+                                                    launchUrlString(team.website);
                                                   },
                                                   child: const Padding(
                                                     padding: EdgeInsets.only(left: 8, right: 8),
@@ -225,11 +294,11 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                               ),
                                             ),
                                             Visibility(
-                                              visible: organization.socialTwitterURL != "",
+                                              visible: team.socialTwitterURL != "",
                                               child: Card(
                                                 child: InkWell(
                                                   onTap: () {
-                                                    launchUrlString(organization.socialTwitterURL);
+                                                    launchUrlString(team.socialTwitterURL);
                                                   },
                                                   child: const Padding(
                                                     padding: EdgeInsets.only(left: 8, right: 8),
@@ -248,11 +317,11 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                               ),
                                             ),
                                             Visibility(
-                                              visible: organization.socialInstagramURL != "",
+                                              visible: team.socialInstagramURL != "",
                                               child: Card(
                                                 child: InkWell(
                                                   onTap: () {
-                                                    launchUrlString(organization.socialInstagramURL);
+                                                    launchUrlString(team.socialInstagramURL);
                                                   },
                                                   child: const Padding(
                                                     padding: EdgeInsets.only(left: 8, right: 8),
@@ -271,11 +340,11 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                               ),
                                             ),
                                             Visibility(
-                                              visible: organization.socialTikTokURL != "",
+                                              visible: team.socialTikTokURL != "",
                                               child: Card(
                                                 child: InkWell(
                                                   onTap: () {
-                                                    launchUrlString(organization.socialTikTokURL);
+                                                    launchUrlString(team.socialTikTokURL);
                                                   },
                                                   child: const Padding(
                                                     padding: EdgeInsets.only(left: 8, right: 8),
@@ -301,57 +370,6 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                 ),
                               ),
                             ),
-                            Padding(padding: LH.hp(context) / 2),
-                            Card(
-                              child: Padding(
-                                padding: LH.hp(context),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Teams",
-                                      style: TextStyle(
-                                        fontSize: 32,
-                                        fontFamily: "Helvetica",
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const Padding(padding: EdgeInsets.all(8)),
-                                    Card(
-                                      color: Theme.of(context).colorScheme.background,
-                                      // color: Theme.of(context).cardColor,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(16),
-                                        child: Row(
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius: const BorderRadius.all(Radius.circular(512)),
-                                              child: ExtendedImage.network(
-                                                organization.iconURL,
-                                                fit: BoxFit.cover,
-                                                width: 55,
-                                                height: 55,
-                                              ),
-                                            ),
-                                            const Padding(padding: EdgeInsets.all(8)),
-                                            const Expanded(
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("Bharat Kathi", style: TextStyle(fontSize: 22, color: Colors.white)),
-                                                  Text("Owner", style: TextStyle(fontSize: 18, color: Colors.grey)),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -373,21 +391,21 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                   ),
                                 ),
                                 Column(
-                                  children: organization.users.where((u) => !u.roles.contains("PENDING")).map((user) => Padding(
+                                  children: team.users.where((u) => !u.roles.contains("PENDING")).map((user) => Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Card(
                                       color: Theme.of(context).colorScheme.background,
                                       // color: Theme.of(context).cardColor,
                                       child: InkWell(
                                         onTap: () {
-                                          if (organization.users.firstWhere((element) => element.userID == currentUser.id).roles.contains("ADMIN")) {
+                                          if (team.users.firstWhere((element) => element.userID == currentUser.id).roles.contains("ADMIN")) {
                                             showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                backgroundColor: Theme.of(context).cardColor,
-                                                surfaceTintColor: Theme.of(context).cardColor,
-                                                content: EditOrganizationUserDialog(organizationID: organization.id, userID: user.userID),
-                                              )
+                                                context: context,
+                                                builder: (context) => AlertDialog(
+                                                  backgroundColor: Theme.of(context).cardColor,
+                                                  surfaceTintColor: Theme.of(context).cardColor,
+                                                  content: EditTeamUserDialog(teamID: team.id, userID: user.userID),
+                                                )
                                             );
                                           }
                                         },
@@ -424,7 +442,7 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                 ),
                                 const Padding(padding: EdgeInsets.all(8)),
                                 Visibility(
-                                  visible: organization.users.where((u) => u.roles.contains("PENDING")).isNotEmpty,
+                                  visible: team.users.where((u) => u.roles.contains("PENDING")).isNotEmpty,
                                   child: const Text(
                                     "Pending Users",
                                     style: TextStyle(
@@ -435,20 +453,20 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                   ),
                                 ),
                                 Column(
-                                  children: organization.users.where((u) => u.roles.contains("PENDING")).map((user) => Padding(
+                                  children: team.users.where((u) => u.roles.contains("PENDING")).map((user) => Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Card(
                                       color: Theme.of(context).colorScheme.background,
                                       // color: Theme.of(context).cardColor,
                                       child: InkWell(
                                         onTap: () {
-                                          if (organization.users.firstWhere((element) => element.userID == currentUser.id).roles.contains("ADMIN")) {
+                                          if (team.users.firstWhere((element) => element.userID == currentUser.id).roles.contains("ADMIN")) {
                                             showDialog(
                                                 context: context,
                                                 builder: (context) => AlertDialog(
                                                   backgroundColor: Theme.of(context).cardColor,
                                                   surfaceTintColor: Theme.of(context).cardColor,
-                                                  content: EditOrganizationUserDialog(organizationID: organization.id, userID: user.userID),
+                                                  content: EditTeamUserDialog(teamID: team.id, userID: user.userID),
                                                 )
                                             );
                                           }
@@ -473,7 +491,7 @@ class _OrganizationDetailsPageState extends State<OrganizationDetailsPage> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text("${user.user.firstName} ${user.user.lastName}", style: const TextStyle(fontSize: 22, color: Colors.white)),
-                                                    Text("Pending", style: const TextStyle(fontSize: 18, color: PEL_WARNING)),
+                                                    const Text("Pending", style: TextStyle(fontSize: 18, color: PEL_WARNING)),
                                                   ],
                                                 ),
                                               ),

@@ -1,13 +1,16 @@
 import 'package:pel_portal/models/user.dart';
 
+const defaultIconURL = "https://firebasestorage.googleapis.com/v0/b/pacific-esports.appspot.com/o/schools%2Fdefault.png?alt=media&token=1b1c77b9-df1c-4308-9019-d9b7fef32ea8";
+const defaultBannerURL = "https://firebasestorage.googleapis.com/v0/b/pacific-esports.appspot.com/o/schools%2Fdefault-banner.png?alt=media&token=fb2dbcfb-fac6-4364-b36b-18015f86b644";
+
 class Team {
   String id = "";
   String name = "";
   String tag = "";
   String bio = "";
   String website = "";
-  String iconURL = "";
-  String bannerURL = "";
+  String iconURL = defaultIconURL;
+  String bannerURL = defaultBannerURL;
   String socialTwitterURL = "";
   String socialInstagramURL = "";
   String socialTikTokURL = "";
@@ -28,7 +31,7 @@ class Team {
     bio = json["bio"] ?? "";
     website = json["website"] ?? "";
     iconURL = json["icon_url"] ?? "";
-    bannerURL = json["banner_url"] ?? "";
+    bannerURL = json["banner_url"] ?? defaultBannerURL;
     socialTwitterURL = json["social_twitter_url"] ?? "";
     socialInstagramURL = json["social_instagram_url"] ?? "";
     socialTikTokURL = json["social_tiktok_url"] ?? "";
@@ -89,6 +92,16 @@ class TeamUser {
     };
   }
 }
+
+Map<String, String> teamRoles = {
+  "ADMIN": "User has full control over the team. They can remove users, change roles, and delete the team. Assign this role carefully.",
+  "CAPTAIN": "User is the team captain, they can sign up for tournaments, manage the team, and more.",
+  "EDITOR": "User can edit team information, change icon, etc.",
+  "ACTIVE": "User is an active member of the team.",
+  "RESERVE": "User is a reserve member of the team.",
+  "MEMBER": "User is a member of the team. Nothing more, nothing less.",
+  "PENDING": "This role marks that the user is pending approval to join the team.",
+};
 
 /*
 {
