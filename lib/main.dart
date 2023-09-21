@@ -16,6 +16,7 @@ import 'package:pel_portal/pages/onboarding/onboarding_page.dart';
 import 'package:pel_portal/pages/onboarding/school_onboarding_page.dart';
 import 'package:pel_portal/pages/onboarding/verification_onboarding_page.dart';
 import 'package:pel_portal/pages/organizations/new_organization_page.dart';
+import 'package:pel_portal/pages/organizations/organization_details_page.dart';
 import 'package:pel_portal/pages/organizations/organizations_page.dart';
 import 'package:pel_portal/pages/teams/teams_page.dart';
 import 'package:pel_portal/utils/config.dart';
@@ -89,6 +90,9 @@ Future<void> main() async {
   }));
   router.define("/organizations/new", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return const NewOrganizationPage();
+  }));
+  router.define("/organizations/:id", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return OrganizationDetailsPage(id: params!["id"][0]);
   }));
 
   router.notFoundHandler = Handler(handlerFunc: (BuildContext? context, Map<String, dynamic> params) {

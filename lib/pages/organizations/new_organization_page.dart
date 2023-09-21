@@ -429,7 +429,6 @@ class _NewOrganizationPageState extends State<NewOrganizationPage> {
                               ),
                               Padding(padding: EdgeInsets.only(top: LH.hpd(context)) / 2),
                               loading ? Container(
-                                width: double.infinity,
                                 padding: const EdgeInsets.all(16),
                                 child: const RefreshProgressIndicator(
                                   backgroundColor: PEL_MAIN,

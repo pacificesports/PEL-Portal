@@ -90,6 +90,13 @@ class OrganizationUser {
   }
 }
 
+Map<String, String> organizationRoles = {
+  "ADMIN": "User has full control over the organization. They can remove users, change roles, and delete the organization. Assign this role carefully.",
+  "EDITOR": "User can edit organization information, change icon and banners, ",
+  "MEMBER": "User is a member of the organization. Nothing more, nothing less.",
+  "PENDING": "This role marks that the user is pending approval to join the organization.",
+};
+
 /*
 {
   "id": "test",
