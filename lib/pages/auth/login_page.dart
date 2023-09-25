@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (err) {
       Logger.error("[login_page] Error occurred while logging in. $err");
-      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Error occurred while trying to log you in. $err"));
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Error occurred while trying to log you in. (${err.toString().split("firebase_auth/")[1].replaceAll("]", ")")}"));
     }
     setState(() {loading = false;});
   }

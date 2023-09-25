@@ -4,6 +4,7 @@ import 'package:firebase_performance/firebase_performance.dart';
 import 'package:fluro/fluro.dart';
 import 'package:pel_portal/models/organization.dart';
 import 'package:pel_portal/models/team.dart';
+import 'package:pel_portal/models/tournament.dart';
 import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/logger.dart';
@@ -37,6 +38,21 @@ class AuthService {
         currentTeams = jsonDecode(response.body)["data"].map<Team>((json) => Team.fromJson(json)).toList();
       } else {
         log("Failed to get teams for user $id");
+      }
+      currentTournaments.clear();
+      for (Team team in currentTeams) {
+        await AuthService.getAuthToken();
+        response = await httpClient.get(Uri.parse("$API_HOST/teams/tournaments/${team.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+        if (response.statusCode == 200) {
+          List<Tournament> tournaments = jsonDecode(response.body)["data"].map<Tournament>((json) => Tournament.fromJson(json)).toList();
+          for (Tournament tournament in tournaments) {
+            if (!currentTournaments.any((element) => element.id == tournament.id)) {
+              currentTournaments.add(tournament);
+            }
+          }
+        } else {
+          log("Failed to get tournaments for team ${team.id}");
+        }
       }
     }
     else {

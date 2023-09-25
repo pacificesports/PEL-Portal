@@ -218,7 +218,7 @@ class _ConnectionsOnboardingPageState extends State<ConnectionsOnboardingPage> {
                                       const Padding(padding: EdgeInsets.all(8)),
                                       buildDiscordConnectionWidget(),
                                       const Padding(padding: EdgeInsets.all(8)),
-                                      buildConnectionWidget("league_id", "League of Legends", "league.jpeg", "Riot ID"),
+                                      buildConnectionWidget("league_id", "League of Legends", "league.jpeg", "Summoner Name"),
                                       const Padding(padding: EdgeInsets.all(8)),
                                       buildConnectionWidget("valorant_id", "Valorant", "valorant.png", "Riot ID"),
                                     ],

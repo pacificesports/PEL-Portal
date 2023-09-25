@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
@@ -49,7 +50,8 @@ class _PortalHomeHeaderState extends State<PortalHomeHeader> {
                           return [
                             PopupMenuItem(
                               onTap: () {
-                                Future.delayed(Duration.zero, () => router.navigateTo(context, "/profile", transition: TransitionType.fadeIn));
+                                // TODO: replace with actual profile page
+                                Future.delayed(Duration.zero, () => router.navigateTo(context, "/onboarding/connections", transition: TransitionType.fadeIn));
                               },
                               child: SizedBox(
                                 child: Column(
@@ -85,7 +87,8 @@ class _PortalHomeHeaderState extends State<PortalHomeHeader> {
                             ),
                             PopupMenuItem(
                               onTap: () {
-                                Future.delayed(Duration.zero, () => router.navigateTo(context, "/settings", transition: TransitionType.fadeIn));
+                                // Future.delayed(Duration.zero, () => router.navigateTo(context, "/settings", transition: TransitionType.fadeIn));
+                                Future.delayed(Duration.zero, () => AlertService.showInfoSnackbar(context, "Coming soon!"));
                               },
                               child: const SizedBox(
                                 width: 200,
