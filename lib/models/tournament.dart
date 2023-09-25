@@ -1,7 +1,5 @@
 import 'package:pel_portal/models/team.dart';
 
-const defaultBannerURL = "https://firebasestorage.googleapis.com/v0/b/pacific-esports.appspot.com/o/schools%2Fdefault-banner.png?alt=media&token=fb2dbcfb-fac6-4364-b36b-18015f86b644";
-
 class Tournament {
   String id = "";
   String name = "";
@@ -54,6 +52,8 @@ class Tournament {
       "created_at": createdAt.toIso8601String()
     };
   }
+
+  static const defaultBannerURL = "https://firebasestorage.googleapis.com/v0/b/pacific-esports.appspot.com/o/schools%2Fdefault-banner.png?alt=media&token=fb2dbcfb-fac6-4364-b36b-18015f86b644";
 }
 
 class TournamentTeam {

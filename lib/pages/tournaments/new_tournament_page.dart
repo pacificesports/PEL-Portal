@@ -151,7 +151,7 @@ class _NewTournamentPageState extends State<NewTournamentPage> {
                           height: 350,
                           width: LH.cw(context),
                           child: ExtendedImage.network(
-                            tournament.bannerURL == "" ? defaultBannerURL : tournament.bannerURL,
+                            tournament.bannerURL == "" ? Tournament.defaultBannerURL : tournament.bannerURL,
                             fit: BoxFit.cover,
                             width: double.infinity,
                           ),

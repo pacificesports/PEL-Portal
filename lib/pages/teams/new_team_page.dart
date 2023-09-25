@@ -111,6 +111,7 @@ class _NewTeamPageState extends State<NewTeamPage> {
           response = await httpClient.post(Uri.parse("$API_HOST/teams/${team.id}/users/${currentUser.id}/roles"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(teamUser.roles));
           if (response.statusCode == 200) {
             Future.delayed(Duration.zero, () => AlertService.showSuccessSnackbar(context, "Team created successfully!"));
+            await AuthService.getUser(currentUser.id);
             Future.delayed(Duration.zero, () => router.navigateTo(context, "/teams/${team.id}", transition: TransitionType.fadeIn));
           } else {
             Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to add user to team!"));
