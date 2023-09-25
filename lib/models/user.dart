@@ -56,6 +56,10 @@ class User {
     return Connection();
   }
 
+  bool canSeeAdmin() {
+    return isAdmin() || canVerify() || canCreateTournament();
+  }
+
   bool isAdmin() {
     return roles.contains("ADMIN");
   }

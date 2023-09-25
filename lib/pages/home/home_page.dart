@@ -296,7 +296,43 @@ class _HomePageState extends State<HomePage> {
                   //     ),
                   //   ),
                   // ),
-                  // const NoOrganizationCard()
+                  // const NoOrganizationCard(),
+                  Visibility(
+                    visible: currentUser.canSeeAdmin(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
+                          child: const Text(
+                            "Admin",
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontFamily: "Helvetica",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Card(
+                          child: InkWell(
+                            onTap: () {
+                              router.navigateTo(context, "/admin/verification", transition: TransitionType.fadeIn);
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Verification Requests", style: TextStyle(fontSize: 18)),
+                                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey)
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
