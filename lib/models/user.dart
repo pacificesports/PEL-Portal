@@ -56,6 +56,18 @@ class User {
     return Connection();
   }
 
+  bool isAdmin() {
+    return roles.contains("ADMIN");
+  }
+
+  bool canVerify() {
+    return roles.contains("ADMIN") || roles.contains("VERIFICATION_WRITE");
+  }
+
+  bool canCreateTournament() {
+    return roles.contains("ADMIN") || roles.contains("TOURNAMENT_WRITE");
+  }
+
   Map<String, dynamic> toJson() {
     return {
       "id": id,

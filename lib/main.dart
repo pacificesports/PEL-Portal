@@ -22,6 +22,9 @@ import 'package:pel_portal/pages/teams/edit_team_page.dart';
 import 'package:pel_portal/pages/teams/new_team_page.dart';
 import 'package:pel_portal/pages/teams/team_details_page.dart';
 import 'package:pel_portal/pages/teams/teams_page.dart';
+import 'package:pel_portal/pages/tournaments/edit_tournament_page.dart';
+import 'package:pel_portal/pages/tournaments/new_tournament_page.dart';
+import 'package:pel_portal/pages/tournaments/tournament_details_page.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/logger.dart';
@@ -107,6 +110,19 @@ Future<void> main() async {
   }));
   router.define("/organizations/:id", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return OrganizationDetailsPage(id: params!["id"][0]);
+  }));
+
+  router.define("/tournaments", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const OrganizationsPage();
+  }));
+  router.define("/tournaments/new", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const NewTournamentPage();
+  }));
+  router.define("/tournaments/:id", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return TournamentDetailsPage(id: params!["id"][0]);
+  }));
+  router.define("/tournaments/:id/edit", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return EditTournamentPage(id: params!["id"][0]);
   }));
 
   router.notFoundHandler = Handler(handlerFunc: (BuildContext? context, Map<String, dynamic> params) {

@@ -49,7 +49,7 @@ class _EditTeamPageState extends State<EditTeamPage> {
   @override
   void initState() {
     super.initState();
-    if (AuthService.verifyUserSession(context, "/teams/${widget.id}")) {
+    if (AuthService.verifyUserSession(context, "/teams/${widget.id}/edit")) {
       getTeams();
     }
   }

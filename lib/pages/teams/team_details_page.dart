@@ -75,6 +75,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
         await AuthService.getAuthToken();
         response = await httpClient.post(Uri.parse("$API_HOST/teams/${team.id}/users/${currentUser.id}/roles"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(teamUser.roles));
         if (response.statusCode == 200) {
+          await AuthService.getUser(currentUser.id);
           Future.delayed(Duration.zero, () => AlertService.showSuccessSnackbar(context, "Team joined successfully!"));
           Future.delayed(Duration.zero, () => router.navigateTo(context, "/teams/${team.id}", transition: TransitionType.fadeIn));
         } else {
