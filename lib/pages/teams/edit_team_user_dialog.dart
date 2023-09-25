@@ -84,94 +84,96 @@ class _EditTeamUserDialogState extends State<EditTeamUserDialog> {
   Widget build(BuildContext context) {
     return Material(
         child: user.userID != "" ? Container(
-            width: 400,
-            height: 400,
+            width: 500,
+            height: 600,
             padding: const EdgeInsets.only(top: 16),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("${user.user.firstName} ${user.user.lastName}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: PEL_MAIN)),
-                  const Padding(padding: EdgeInsets.all(8)),
-                  const Text("Title", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey)),
-                  const Padding(padding: EdgeInsets.all(4)),
-                  MaterialTextField(
-                    keyboardType: TextInputType.name,
-                    hint: "Title",
-                    textInputAction: TextInputAction.done,
-                    controller: titleController,
-                    prefixIcon: const Icon(Icons.badge_rounded),
-                    onChanged: (value) {
-                      setState(() {
-                        user.title = value;
-                      });
-                    },
-                  ),
-                  const Padding(padding: EdgeInsets.all(8)),
-                  const Text("Roles", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey)),
-                  const Padding(padding: EdgeInsets.all(4)),
-                  Column(
-                    children: teamRoles.keys.map((role) => Card(
-                      color: Theme.of(context).colorScheme.background,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              value: user.roles.contains(role),
-                              onChanged: (value) {
-                                setState(() {
-                                  if (value!) {
-                                    if (role == "PENDING") {
-                                      user.roles.clear();
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("${user.user.firstName} ${user.user.lastName}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: PEL_MAIN)),
+                const Padding(padding: EdgeInsets.all(8)),
+                const Text("Title", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey)),
+                const Padding(padding: EdgeInsets.all(4)),
+                MaterialTextField(
+                  keyboardType: TextInputType.name,
+                  hint: "Title",
+                  textInputAction: TextInputAction.done,
+                  controller: titleController,
+                  prefixIcon: const Icon(Icons.badge_rounded),
+                  onChanged: (value) {
+                    setState(() {
+                      user.title = value;
+                    });
+                  },
+                ),
+                const Padding(padding: EdgeInsets.all(8)),
+                const Text("Roles", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey)),
+                const Padding(padding: EdgeInsets.all(4)),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: teamRoles.keys.map((role) => Card(
+                        color: Theme.of(context).colorScheme.background,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                value: user.roles.contains(role),
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (role == "PENDING") {
+                                        user.roles.clear();
+                                      } else {
+                                        user.roles.remove("PENDING");
+                                      }
+                                      user.roles.add(role);
                                     } else {
-                                      user.roles.remove("PENDING");
+                                      user.roles.remove(role);
                                     }
-                                    user.roles.add(role);
-                                  } else {
-                                    user.roles.remove(role);
-                                  }
-                                });
-                              },
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(role, style: const TextStyle(fontSize: 16)),
-                                  Text(teamRoles[role]!, style: const TextStyle(color: Colors.grey, fontSize: 14)),
-                                ],
+                                  });
+                                },
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )).toList(),
-                  ),
-                  const Padding(padding: EdgeInsets.all(8)),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: !loading ? PELTextButton(
-                          text: "Save",
-                          onPressed: () {
-                            saveUser();
-                          },
-                        ) : const Center(
-                          child: RefreshProgressIndicator(
-                            backgroundColor: PEL_MAIN,
-                            color: Colors.white,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(role, style: const TextStyle(fontSize: 16)),
+                                    Text(teamRoles[role]!, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
+                      )).toList(),
+                    ),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.all(8)),
+                Row(
+                  children: [
+                    Expanded(
+                      child: !loading ? PELTextButton(
+                        text: "Save",
+                        onPressed: () {
+                          saveUser();
+                        },
+                      ) : const Center(
+                        child: RefreshProgressIndicator(
+                          backgroundColor: PEL_MAIN,
+                          color: Colors.white,
+                        ),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                )
+              ],
             )
         ) : const SizedBox(
-          width: 400,
-          height: 400,
+          width: 500,
+          height: 600,
           child: Center(
             child: RefreshProgressIndicator(
               backgroundColor: PEL_MAIN,

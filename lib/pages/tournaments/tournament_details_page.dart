@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:markdown_editor_plus/markdown_editor_plus.dart';
 import 'package:pel_portal/models/tournament.dart';
+import 'package:pel_portal/pages/tournaments/tournament_registration_dialog.dart';
 import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
@@ -211,7 +212,14 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                               child: PELTextButton(
                                 text: "Register",
                                 onPressed: () {
-                                  // joinTeam();
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        backgroundColor: Theme.of(context).cardColor,
+                                        surfaceTintColor: Theme.of(context).cardColor,
+                                        content: TournamentRegistrationDialog(tournamentID: tournament.id),
+                                      )
+                                  );
                                 },
                               )
                           ),
