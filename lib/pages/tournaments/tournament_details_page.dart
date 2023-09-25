@@ -93,6 +93,18 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
   //   setState(() => joinLoading = false);
   // }
 
+  Future<void> unregisterTeam(String teamID) async {
+    var response = await httpClient.delete(Uri.parse("$API_HOST/tournaments/${tournament.id}/teams/$teamID"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+    if (response.statusCode == 200) {
+      await AuthService.getUser(currentUser.id);
+      Future.delayed(Duration.zero, () => router.pop(context));
+      Future.delayed(Duration.zero, () => router.navigateTo(context, "/tournaments/${tournament.id}", transition: TransitionType.fadeIn));
+    } else {
+      Logger.error("[tournament_details_page] Error unregistering team: ${response.body}");
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to unregister team!"));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,7 +220,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                           ),
                           const Padding(padding: EdgeInsets.all(8)),
                           Visibility(
-                              visible: !currentTournaments.any((element) => element.id == tournament.id),
+                              visible: !currentTournaments.any((element) => element.id == tournament.id) && tournament.registrationStart.toLocal().isBefore(DateTime.now()) && tournament.registrationEnd.toLocal().isAfter(DateTime.now()),
                               child: PELTextButton(
                                 text: "Register",
                                 onPressed: () {
@@ -225,20 +237,15 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                           ),
                           Visibility(
                               visible: currentTournaments.any((element) => element.id == tournament.id),
-                              child: Card(
-                                child: InkWell(
-                                  onTap: () {
-
-                                  },
-                                  child: const Padding(
-                                  padding: EdgeInsets.all(12),
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.check_circle_rounded, color: PEL_SUCCESS, size: 16),
-                                        Padding(padding: EdgeInsets.all(4)),
-                                        Text("Registered", style: TextStyle(fontSize: 18)),
-                                      ],
-                                    ),
+                              child: const Card(
+                                child: Padding(
+                                padding: EdgeInsets.all(12),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.check_circle_rounded, color: PEL_SUCCESS, size: 16),
+                                      Padding(padding: EdgeInsets.all(4)),
+                                      Text("Registered", style: TextStyle(fontSize: 18)),
+                                    ],
                                   ),
                                 ),
                               )
@@ -337,6 +344,90 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                                     fontFamily: "Helvetica",
                                     color: Colors.grey,
                                   ),
+                                ),
+                                const Padding(padding: EdgeInsets.all(8)),
+                                Visibility(
+                                  visible: currentTournaments.any((element) => element.id == tournament.id),
+                                  child: const Text(
+                                    "My Teams: ",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "Helvetica",
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: currentTournaments.any((element) => element.id == tournament.id),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: tournament.teams.length,
+                                    itemBuilder: (context, index) {
+                                      return Card(
+                                        color: Theme.of(context).colorScheme.background,
+                                        child: InkWell(
+                                          onTap: () {
+                                            router.navigateTo(context, "/teams/${tournament.teams[index].teamID}", transition: TransitionType.fadeIn);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius: const BorderRadius.all(Radius.circular(512)),
+                                                  child: ExtendedImage.network(
+                                                    tournament.teams[index].team.iconURL,
+                                                    fit: BoxFit.cover,
+                                                    width: 45,
+                                                    height: 45,
+                                                  ),
+                                                ),
+                                                const Padding(padding: EdgeInsets.all(8)),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(tournament.teams[index].team.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                IconButton(
+                                                  icon: const Icon(Icons.cancel_rounded, color: Colors.grey),
+                                                  onPressed: () {
+                                                    AlertService.showConfirmationDialog(context, "Unregister Team", "Are you sure you want to unregister this team from the tournament?", () {
+                                                      unregisterTeam(tournament.teams[index].teamID);
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Visibility(
+                                    visible: currentTournaments.any((element) => element.id == tournament.id) && tournament.registrationStart.toLocal().isBefore(DateTime.now()) && tournament.registrationEnd.toLocal().isAfter(DateTime.now()),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: PELTextButton(
+                                        style: PELTextButtonStyle.outlined,
+                                        text: "Register Another Team",
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Theme.of(context).cardColor,
+                                                surfaceTintColor: Theme.of(context).cardColor,
+                                                content: TournamentRegistrationDialog(tournamentID: tournament.id),
+                                              )
+                                          );
+                                        },
+                                      ),
+                                    )
                                 ),
                               ],
                             ),

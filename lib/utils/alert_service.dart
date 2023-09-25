@@ -1,6 +1,7 @@
 
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:pel_portal/utils/theme.dart';
 
@@ -80,6 +81,22 @@ class AlertService {
         );
       },
     ).show(context);
+  }
+
+  static showConfirmationDialog(context, String title, String message, Function onConfirm) {
+    CoolAlert.show(
+      context: context,
+      width: 300,
+      type: CoolAlertType.warning,
+      title: title,
+      text: message,
+      showCancelBtn: true,
+      confirmBtnText: "YES",
+      cancelBtnText: "CANCEL",
+      confirmBtnColor: PEL_MAIN,
+      onConfirmBtnTap: () => onConfirm(),
+      backgroundColor: PEL_MAIN,
+    );
   }
 
 }
