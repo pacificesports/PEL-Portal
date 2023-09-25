@@ -5,6 +5,8 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:pel_portal/pages/admin/admin_verification_page.dart';
+import 'package:pel_portal/pages/admin/admin_verification_user_page.dart';
 import 'package:pel_portal/pages/auth/auth_checker.dart';
 import 'package:pel_portal/pages/auth/login_page.dart';
 import 'package:pel_portal/pages/auth/register_page.dart';
@@ -124,6 +126,13 @@ Future<void> main() async {
   }));
   router.define("/tournaments/:id/edit", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return EditTournamentPage(id: params!["id"][0]);
+  }));
+
+  router.define("/admin/verification", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return const AdminVerificationPage();
+  }));
+  router.define("/admin/verification/users/:id", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
+    return AdminVerificationUserPage(id: params!["id"][0]);
   }));
 
   router.notFoundHandler = Handler(handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
