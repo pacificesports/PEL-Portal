@@ -3,7 +3,7 @@ run-name: Triggered by ${{ github.event_name }} to ${{ github.ref }} by @${{ git
 
 env:
   FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
-  ENV_STAGE: ${{ secrets.ENV_STAGE }}
+  ENV_PROD: ${{ secrets.ENV_PROD }}
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       - name: Copy files
         run: |
           touch .env
-          echo "${{ secrets.ENV_STAGE }}" > .env
+          echo "${{ secrets.ENV_PROD }}" > .env
           touch lib/firebase_options.dart
           echo "${{ secrets.FIREBASE_OPTIONS }}" > lib/firebase_options.dart
       - name: Setup Flutter
