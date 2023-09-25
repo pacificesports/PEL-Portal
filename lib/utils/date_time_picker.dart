@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: public_member_api_docs, library_private_types_in_public_api, use_build_context_synchronously
+
 library date_time_picker;
 
 import 'package:flutter/material.dart';
@@ -133,7 +135,7 @@ class DateTimePicker extends FormField<String> {
   /// to [initialValue] or the empty string.
   ///
   /// For documentation about the various parameters, see the [TextField] class
-  /// and [new TextField], the constructor.
+  /// and [TextField], the constructor.
   DateTimePicker({
     Key? key,
     this.type = DateTimePickerType.date,
@@ -177,7 +179,6 @@ class DateTimePicker extends FormField<String> {
     TextAlignVertical? textAlignVertical,
     bool autofocus = false,
     bool readOnly = false,
-    ToolbarOptions? toolbarOptions,
     bool showCursor = false,
     bool obscureText = false,
     bool autocorrect = true,
@@ -306,7 +307,6 @@ class DateTimePicker extends FormField<String> {
               //textDirection: textDirection,
               textCapitalization: textCapitalization,
               autofocus: autofocus,
-              toolbarOptions: toolbarOptions,
               showCursor: showCursor,
               obscureText: obscureText,
               autocorrect: autocorrect,

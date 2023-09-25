@@ -7,7 +7,6 @@ import 'package:firebase_performance/firebase_performance.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:markdown_editor_plus/widgets/markdown_auto_preview.dart';
 import 'package:material_text_fields/material_text_fields.dart';
 import 'package:pel_portal/models/tournament.dart';
@@ -441,7 +440,6 @@ class _EditTournamentPageState extends State<EditTournamentPage> {
                                               firstDate: DateTime.now().subtract(const Duration(days: 365)),
                                               lastDate: DateTime.now().add(const Duration(days: 730)),
                                               onChanged: (val) {
-                                                print(val);
                                                 DateTime parsed = DateTime.parse(val);
                                                 setState(() {
                                                   tournament.registrationEnd = parsed.toUtc();
