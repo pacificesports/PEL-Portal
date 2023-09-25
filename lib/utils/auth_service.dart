@@ -44,7 +44,12 @@ class AuthService {
         await AuthService.getAuthToken();
         response = await httpClient.get(Uri.parse("$API_HOST/teams/tournaments/${team.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
         if (response.statusCode == 200) {
-          currentTournaments.addAll(jsonDecode(response.body)["data"].map<Tournament>((json) => Tournament.fromJson(json)).toList());
+          List<Tournament> tournaments = jsonDecode(response.body)["data"].map<Tournament>((json) => Tournament.fromJson(json)).toList();
+          for (Tournament tournament in tournaments) {
+            if (!currentTournaments.any((element) => element.id == tournament.id)) {
+              currentTournaments.add(tournament);
+            }
+          }
         } else {
           log("Failed to get tournaments for team ${team.id}");
         }
