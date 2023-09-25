@@ -122,7 +122,18 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       }
-                  )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
+                    child: const Text(
+                      "My Tournaments",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontFamily: "Helvetica",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   // Padding(
                   //   padding: EdgeInsets.only(top: LH.pd(context), left: LH.hpd(context)),
                   //   child: const Text(
