@@ -529,7 +529,7 @@ class _EditTournamentPageState extends State<EditTournamentPage> {
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: PELTextButton(
-                                    text: "Create Tournament",
+                                    text: "Save Changes",
                                     onPressed: () {
                                       saveTournament();
                                     },

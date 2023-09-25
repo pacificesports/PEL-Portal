@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:extended_image/extended_image.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:markdown_editor_plus/markdown_editor_plus.dart';
 import 'package:pel_portal/models/tournament.dart';
 import 'package:pel_portal/utils/alert_service.dart';
@@ -112,7 +113,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                       alignment: Alignment.bottomLeft,
                       children: [
                         SizedBox(
-                          height: 250,
+                          height: 350,
                           width: LH.cw(context),
                           child: ExtendedImage.network(
                             tournament.bannerURL == "" ? defaultBannerURL : tournament.bannerURL,
@@ -121,7 +122,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                           ),
                         ),
                         Container(
-                          height: 250,
+                          height: 350,
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                   begin: FractionalOffset.topCenter,
@@ -135,7 +136,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                           ),
                         ),
                         Container(
-                          height: 250,
+                          height: 350,
                           width: LH.cw(context),
                           padding: const EdgeInsets.all(32),
                           child: Row(
@@ -215,7 +216,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                               )
                           ),
                           Visibility(
-                              visible: !currentTournaments.any((element) => element.id == tournament.id),
+                              visible: currentTournaments.any((element) => element.id == tournament.id),
                               child: Card(
                                 child: InkWell(
                                   onTap: () {
@@ -284,15 +285,49 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                         child: Card(
                           child: Padding(
                             padding: LH.hp(context),
-                            child: const Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "Registration",
                                   style: TextStyle(
                                     fontSize: 32,
                                     fontFamily: "Helvetica",
                                     fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Padding(padding: EdgeInsets.all(8)),
+                                const Text(
+                                  "Starts: ",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: "Helvetica",
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat("EEE, MMM d, yyyy h:mm a").format(tournament.registrationStart.toLocal()),
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: "Helvetica",
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                const Padding(padding: EdgeInsets.all(8)),
+                                const Text(
+                                  "Ends: ",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: "Helvetica",
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat("EEE, MMM d, yyyy h:mm a").format(tournament.registrationEnd.toLocal()),
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: "Helvetica",
+                                    color: Colors.grey,
                                   ),
                                 ),
                               ],

@@ -25,6 +25,7 @@ import 'package:pel_portal/pages/teams/teams_page.dart';
 import 'package:pel_portal/pages/tournaments/edit_tournament_page.dart';
 import 'package:pel_portal/pages/tournaments/new_tournament_page.dart';
 import 'package:pel_portal/pages/tournaments/tournament_details_page.dart';
+import 'package:pel_portal/pages/tournaments/tournaments_page.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/logger.dart';
@@ -113,7 +114,7 @@ Future<void> main() async {
   }));
 
   router.define("/tournaments", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
-    return const OrganizationsPage();
+    return const TournamentsPage();
   }));
   router.define("/tournaments/new", handler: Handler(handlerFunc: (BuildContext? context, Map<String, dynamic>? params) {
     return const NewTournamentPage();
