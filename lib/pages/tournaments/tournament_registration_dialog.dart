@@ -115,6 +115,7 @@ class _TournamentRegistrationDialogState extends State<TournamentRegistrationDia
     tournamentTeam.tournamentID = tournament.id;
     var response = await httpClient.post(Uri.parse("$API_HOST/tournaments/${tournament.id}/teams/${team.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(tournamentTeam));
     if (response.statusCode == 200) {
+      await AuthService.getUser(currentUser.id);
       Future.delayed(Duration.zero, () => router.pop(context));
       Future.delayed(Duration.zero, () => router.navigateTo(context, "/tournaments/${tournament.id}", transition: TransitionType.fadeIn));
     } else {

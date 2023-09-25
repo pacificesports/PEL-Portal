@@ -123,7 +123,7 @@ class _TournamentsPageState extends State<TournamentsPage> {
                           onTap: () {
                             router.navigateTo(context, "/tournaments/${tournamentList[index].id}", transition: TransitionType.fadeIn);
                           },
-                          child: Container(
+                          child: SizedBox(
                             height: 300,
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(8)),
