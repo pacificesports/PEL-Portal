@@ -206,7 +206,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
                       Row(
                         children: [
                           Visibility(
-                            visible: team.users.firstWhere((element) => element.userID == currentUser.id).roles.any((element) => ["ADMIN", "CAPTAIN", "EDITOR"].contains(element)),
+                            visible: team.users.any((element) => element.userID == currentUser.id) && team.users.firstWhere((element) => element.userID == currentUser.id).roles.any((element) => ["ADMIN", "CAPTAIN", "EDITOR"].contains(element)),
                             child: PELTextButton(
                               text: "Edit Team",
                               style: PELTextButtonStyle.outlined,
