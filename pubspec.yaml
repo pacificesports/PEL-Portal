@@ -109,6 +109,7 @@ flutter:
     - assets/images/icons/
     - assets/images/pel_icons/
     - assets/images/pel_abbrev/
+    - assets/images/onboarding/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
