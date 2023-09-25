@@ -5,6 +5,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:markdown_editor_plus/markdown_editor_plus.dart';
+import 'package:pel_portal/models/team.dart';
 import 'package:pel_portal/models/tournament.dart';
 import 'package:pel_portal/pages/tournaments/tournament_registration_dialog.dart';
 import 'package:pel_portal/utils/alert_service.dart';
@@ -57,6 +58,13 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
       setState(() {
         tournament.teams = List<TournamentTeam>.from(jsonDecode(response.body)["data"].map((x) => TournamentTeam.fromJson(x)));
       });
+      for (TournamentTeam team in tournament.teams) {
+        await AuthService.getAuthToken();
+        response = await httpClient.get(Uri.parse("$API_HOST/teams/${team.teamID}/users"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+        setState(() {
+          team.team.users = List<TeamUser>.from(jsonDecode(response.body)["data"].map((x) => TeamUser.fromJson(x)));
+        });
+      }
     } catch(err) {
       Logger.info("[tournament_details_page] Error getting tournament: $err");
       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to get tournament!"));
@@ -129,7 +137,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                           height: 350,
                           width: LH.cw(context),
                           child: ExtendedImage.network(
-                            tournament.bannerURL == "" ? defaultBannerURL : tournament.bannerURL,
+                            tournament.bannerURL == "" ? Tournament.defaultBannerURL : tournament.bannerURL,
                             fit: BoxFit.cover,
                             width: double.infinity,
                           ),
@@ -291,6 +299,74 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                                 ),
                               ),
                             ),
+                            const Padding(padding: EdgeInsets.all(8)),
+                            Card(
+                              color: Theme.of(context).cardColor,
+                              child: Padding(
+                                padding: LH.hp(context),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Teams",
+                                      style: TextStyle(
+                                        fontSize: 32,
+                                        fontFamily: "Helvetica",
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const Padding(padding: EdgeInsets.all(8)),
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      itemCount: tournament.teams.length,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          color: Theme.of(context).colorScheme.background,
+                                          child: InkWell(
+                                            onTap: () {
+                                              router.navigateTo(context, "/teams/${tournament.teams[index].teamID}", transition: TransitionType.fadeIn);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius: const BorderRadius.all(Radius.circular(512)),
+                                                    child: ExtendedImage.network(
+                                                      tournament.teams[index].team.iconURL,
+                                                      fit: BoxFit.cover,
+                                                      width: 45,
+                                                      height: 45,
+                                                    ),
+                                                  ),
+                                                  const Padding(padding: EdgeInsets.all(8)),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(tournament.teams[index].team.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey),
+                                                    onPressed: () {
+                                                      router.navigateTo(context, "/teams/${tournament.teams[index].teamID}", transition: TransitionType.fadeIn);
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -362,13 +438,14 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                                   child: ListView.builder(
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: tournament.teams.length,
+                                    itemCount: tournament.teams.where((element) => currentTeams.any((e) => e.id == element.teamID)).length,
                                     itemBuilder: (context, index) {
+                                      List<TournamentTeam> teams = tournament.teams.where((element) => currentTeams.any((e) => e.id == element.teamID)).toList();
                                       return Card(
                                         color: Theme.of(context).colorScheme.background,
                                         child: InkWell(
                                           onTap: () {
-                                            router.navigateTo(context, "/teams/${tournament.teams[index].teamID}", transition: TransitionType.fadeIn);
+                                            router.navigateTo(context, "/teams/${teams[index].teamID}", transition: TransitionType.fadeIn);
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -378,7 +455,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                                                 ClipRRect(
                                                   borderRadius: const BorderRadius.all(Radius.circular(512)),
                                                   child: ExtendedImage.network(
-                                                    tournament.teams[index].team.iconURL,
+                                                    teams[index].team.iconURL,
                                                     fit: BoxFit.cover,
                                                     width: 45,
                                                     height: 45,
@@ -389,17 +466,20 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text(tournament.teams[index].team.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                                                      Text(teams[index].team.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                                                     ],
                                                   ),
                                                 ),
-                                                IconButton(
-                                                  icon: const Icon(Icons.cancel_rounded, color: Colors.grey),
-                                                  onPressed: () {
-                                                    AlertService.showConfirmationDialog(context, "Unregister Team", "Are you sure you want to unregister this team from the tournament?", () {
-                                                      unregisterTeam(tournament.teams[index].teamID);
-                                                    });
-                                                  },
+                                                Visibility(
+                                                  visible: teams[index].team.users.firstWhere((element) => element.userID == currentUser.id).roles.any((element) => ["ADMIN", "CAPTAIN"].contains(element)),
+                                                  child: IconButton(
+                                                    icon: const Icon(Icons.cancel_rounded, color: Colors.grey),
+                                                    onPressed: () {
+                                                      AlertService.showConfirmationDialog(context, "Unregister Team", "Are you sure you want to unregister this team from the tournament?", () {
+                                                        unregisterTeam(teams[index].teamID);
+                                                      });
+                                                    },
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -411,7 +491,8 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                                 ),
                                 Visibility(
                                     visible: currentTournaments.any((element) => element.id == tournament.id) && tournament.registrationStart.toLocal().isBefore(DateTime.now()) && tournament.registrationEnd.toLocal().isAfter(DateTime.now()),
-                                    child: SizedBox(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 8),
                                       width: double.infinity,
                                       child: PELTextButton(
                                         style: PELTextButtonStyle.outlined,

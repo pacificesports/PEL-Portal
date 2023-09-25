@@ -88,6 +88,7 @@ class _EditTeamPageState extends State<EditTeamPage> {
       await AuthService.getAuthToken();
       var response = await httpClient.post(Uri.parse("$API_HOST/teams"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(team));
       if (response.statusCode == 200) {
+        await AuthService.getUser(currentUser.id);
         Future.delayed(Duration.zero, () => router.navigateTo(context, "/teams/${widget.id}", transition: TransitionType.fadeIn));
       } else {
         Logger.error("[edit_team_page] Failed to save team! ${response.statusCode} ${response.body}");
