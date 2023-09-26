@@ -89,6 +89,10 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
   }
 
   Future<void> selectVerificationFile() async {
+    if (currentUser.school.schoolID == "") {
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Please select a school first!"));
+      return;
+    }
     Trace trace = FirebasePerformance.instance.newTrace("selectVerificationFile()");
     await trace.start();
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -125,6 +129,10 @@ class _VerificationOnboardingPageState extends State<VerificationOnboardingPage>
   }
 
   Future<void> submitVerification() async {
+    if (currentUser.school.schoolID == "") {
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Please select a school first!"));
+      return;
+    }
     Trace trace = FirebasePerformance.instance.newTrace("submitVerification()");
     await trace.start();
     currentUser.verification.userID = currentUser.id;
