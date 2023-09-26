@@ -12,6 +12,7 @@ import 'package:material_text_fields/theme/material_text_field_theme.dart';
 import 'package:pel_portal/models/school.dart';
 import 'package:pel_portal/models/user.dart';
 import 'package:pel_portal/models/user_school.dart';
+import 'package:pel_portal/models/verification.dart';
 import 'package:pel_portal/utils/alert_service.dart';
 import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
@@ -132,7 +133,9 @@ class _SchoolOnboardingPageState extends State<SchoolOnboardingPage> {
 
   Future<void> resetSchool() async {
     currentUser.school = UserSchool();
+    currentUser.verification = Verification();
     currentUser.school.userID = currentUser.id;
+    currentUser.verification.userID = currentUser.id;
     try {
       await AuthService.getAuthToken();
       var response = await httpClient.post(Uri.parse("$API_HOST/users/${currentUser.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(currentUser));
@@ -320,7 +323,7 @@ class _SchoolOnboardingPageState extends State<SchoolOnboardingPage> {
                                                 },
                                               ),
                                               Visibility(
-                                                visible: filteredSchools.length < 3 && !creatingSchool && currentUser.school.schoolID == "",
+                                                visible: filteredSchools.length < 10 && !creatingSchool && currentUser.school.schoolID == "",
                                                 child: Center(
                                                   child: PELTextButton(
                                                     text: "Don't see your school?",
