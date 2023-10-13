@@ -242,7 +242,7 @@ class _ConnectionsOnboardingPageState extends State<ConnectionsOnboardingPage> {
                                   ),
                                   const Padding(padding: EdgeInsets.all(4)),
                                   Visibility(
-                                    visible: currentUser.verification.isVerified && currentUser.verification.isEmailVerified,
+                                    visible: currentUser.verification.isVerified,
                                     child: PELTextButton(
                                       text: "Done",
                                       style: currentUser.connections.length > 4 ? PELTextButtonStyle.filled : PELTextButtonStyle.outlined,
