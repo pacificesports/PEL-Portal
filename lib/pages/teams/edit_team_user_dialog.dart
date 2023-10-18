@@ -90,9 +90,10 @@ class _EditTeamUserDialogState extends State<EditTeamUserDialog> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${user.user.firstName} ${user.user.lastName}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: PEL_MAIN)),
+                Text("Editing ${user.user.firstName} ${user.user.lastName}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: PEL_MAIN)),
                 const Padding(padding: EdgeInsets.all(8)),
                 const Text("Title", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey)),
+                const Text("A title is a public-facing name to represent a user's role on the team. This can be anything you want (e.g. Coach, Jungler, Head of Eco-Round Strategies)!", style: TextStyle(color: Colors.grey, fontSize: 14)),
                 const Padding(padding: EdgeInsets.all(4)),
                 MaterialTextField(
                   keyboardType: TextInputType.name,
@@ -108,6 +109,7 @@ class _EditTeamUserDialogState extends State<EditTeamUserDialog> {
                 ),
                 const Padding(padding: EdgeInsets.all(8)),
                 const Text("Roles", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey)),
+                const Text("Roles are internal tags used to give users access to various parts of the team.", style: TextStyle(color: Colors.grey, fontSize: 14)),
                 const Padding(padding: EdgeInsets.all(4)),
                 Expanded(
                   child: SingleChildScrollView(
