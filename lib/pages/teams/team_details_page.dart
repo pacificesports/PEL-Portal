@@ -39,11 +39,11 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
   void initState() {
     super.initState();
     if (AuthService.verifyUserSession(context, "/teams/${widget.id}")) {
-      getTeams();
+      getTeam();
     }
   }
 
-  Future<void> getTeams() async {
+  Future<void> getTeam() async {
     try {
       await AuthService.getAuthToken();
       var response = await httpClient.get(Uri.parse("$API_HOST/teams/${widget.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
@@ -430,7 +430,70 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text("${user.user.firstName} ${user.user.lastName}", style: const TextStyle(fontSize: 22, color: Colors.white)),
-                                                    Text(user.title, style: const TextStyle(fontSize: 18, color: Colors.grey)),
+                                                    Row(
+                                                      children: [
+                                                        Text(user.title, style: const TextStyle(fontSize: 18, color: Colors.grey)),
+                                                        const Padding(padding: EdgeInsets.all(4)),
+                                                        Visibility(
+                                                          visible: user.roles.contains("CAPTAIN"),
+                                                          child: const Card(
+                                                            color: PEL_MAIN,
+                                                            child: Padding(
+                                                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                                              child: Text("Captain"),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Visibility(
+                                                          visible: user.roles.contains("ACTIVE"),
+                                                          child: const Card(
+                                                            color: Colors.green,
+                                                            child: Padding(
+                                                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                                              child: Text("Active"),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Visibility(
+                                                          visible: user.roles.contains("RESERVE"),
+                                                          child: const Card(
+                                                            color: Colors.amber,
+                                                            child: Padding(
+                                                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                                              child: Text("Reserve"),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Wrap(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Image.asset("assets/images/icons/discord.png", height: 18, color: Colors.white),
+                                                            const Padding(padding: EdgeInsets.all(4)),
+                                                            Text("@${user.user.getConnection("discord_username").connection}", style: const TextStyle(fontSize: 18, color: Colors.grey)),
+                                                          ],
+                                                        ),
+                                                        const Padding(padding: EdgeInsets.all(8)),
+                                                        team.game == "Valorant" ? Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Image.asset("assets/images/icons/valorant.png", height: 18, color: Colors.white),
+                                                            const Padding(padding: EdgeInsets.all(4)),
+                                                            Text("${user.user.getConnection("valorant_id").connection} ", style: const TextStyle(fontSize: 18, color: Colors.grey)),
+                                                          ],
+                                                        ) : Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Image.asset("assets/images/icons/league.jpeg", height: 18),
+                                                            const Padding(padding: EdgeInsets.all(4)),
+                                                            Text(user.user.getConnection("league_id").connection != "" ? user.user.getConnection("league_id").connection : "Not Connected", style: const TextStyle(fontSize: 18, color: Colors.grey)),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
                                               ),
