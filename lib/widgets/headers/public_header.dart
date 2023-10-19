@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pel_portal/utils/auth_service.dart';
 import 'package:pel_portal/utils/config.dart';
 import 'package:pel_portal/utils/layout.dart';
 import 'package:pel_portal/utils/theme.dart';
@@ -58,16 +57,6 @@ class PublicHeader extends StatelessWidget {
                         style: PELTextButtonStyle.filled,
                         onPressed: () {
                           router.navigateTo(context, "/auth/check", transition: TransitionType.fadeIn);
-                        },
-                      ),
-                      const SizedBox(width: 16,),
-                      PELTextButton(
-                        text: "Sign out",
-                        color: PEL_ERROR,
-                        style: PELTextButtonStyle.outlined,
-                        onPressed: () async {
-                          await AuthService.signOut();
-                          Future.delayed(Duration.zero, () => router.navigateTo(context, "/auth/check", clearStack: true, replace: true, transition: TransitionType.fadeIn));
                         },
                       ),
                     ],
