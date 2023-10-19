@@ -20,7 +20,7 @@ late SharedPreferences prefs;
 Version appVersion = Version("1.0.0+1");
 Version stableVersion = Version("1.0.0+1");
 
-String API_HOST = "https://api.stage.pacificesports.org";
+String API_HOST = "pel-api-host";
 
 String PEL_API_KEY = "pel-api-key";
 String PEL_AUTH_TOKEN = "pel-auth-token";

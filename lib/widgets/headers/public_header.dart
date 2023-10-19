@@ -60,16 +60,6 @@ class PublicHeader extends StatelessWidget {
                           router.navigateTo(context, "/auth/check", transition: TransitionType.fadeIn);
                         },
                       ),
-                      const SizedBox(width: 16,),
-                      PELTextButton(
-                        text: "Sign out",
-                        color: PEL_ERROR,
-                        style: PELTextButtonStyle.outlined,
-                        onPressed: () async {
-                          await AuthService.signOut();
-                          Future.delayed(Duration.zero, () => router.navigateTo(context, "/auth/check", clearStack: true, replace: true, transition: TransitionType.fadeIn));
-                        },
-                      ),
                     ],
                   )
                 ],
