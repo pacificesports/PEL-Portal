@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:fluro/fluro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 import 'package:material_text_fields/material_text_fields.dart';
 import 'package:material_text_fields/theme/material_text_field_theme.dart';
@@ -78,11 +80,11 @@ class _TeamsPageState extends State<TeamsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const PortalHeader(),
-            Container(
+      body: Column(
+        children: [
+          const PortalHeader(),
+          Expanded(
+            child: Container(
               padding: LH.p(context),
               width: LH.cw(context),
               child: Column(
@@ -132,76 +134,77 @@ class _TeamsPageState extends State<TeamsPage> {
                       )
                     ],
                   ),
-                  ListView.builder(
-                    itemCount: displayList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Card(
-                          child: InkWell(
-                            onTap: () {
-                              router.navigateTo(context, "/teams/${displayList[index].id}", transition: TransitionType.fadeIn);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.all(Radius.circular(512)),
-                                    child: ExtendedImage.network(
-                                      displayList[index].iconURL,
-                                      fit: BoxFit.cover,
-                                      width: 55,
-                                      height: 55,
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: displayList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Card(
+                            child: InkWell(
+                              onTap: () {
+                                router.navigateTo(context, "/teams/${displayList[index].id}", transition: TransitionType.fadeIn);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.all(Radius.circular(512)),
+                                      child: ExtendedImage.network(
+                                        displayList[index].iconURL,
+                                        fit: BoxFit.cover,
+                                        width: 55,
+                                        height: 55,
+                                      ),
                                     ),
-                                  ),
-                                  const Padding(padding: EdgeInsets.all(8)),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(displayList[index].name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                                        Text(displayList[index].game, style: const TextStyle(fontSize: 16, color: Colors.grey)),
-                                      ],
+                                    const Padding(padding: EdgeInsets.all(8)),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(displayList[index].name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                                          Text(displayList[index].game, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Visibility(
-                                    visible: currentTeams.any((element) => element.id == displayList[index].id),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Card(
-                                        color: Theme.of(context).colorScheme.background,
-                                        child: Container(
-                                          padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-                                          child: const Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.check_circle_rounded, color: PEL_MAIN),
-                                              Padding(padding: EdgeInsets.all(4)),
-                                              Text("Joined", style: TextStyle(fontSize: 16, color: Colors.grey)),
-                                            ],
+                                    Visibility(
+                                      visible: currentTeams.any((element) => element.id == displayList[index].id),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Card(
+                                          color: Theme.of(context).colorScheme.background,
+                                          child: Container(
+                                            padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                                            child: const Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.check_circle_rounded, color: PEL_MAIN),
+                                                Padding(padding: EdgeInsets.all(4)),
+                                                Text("Joined", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey)
-                                ],
+                                    const Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey)
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      }
+                    ),
                   )
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
