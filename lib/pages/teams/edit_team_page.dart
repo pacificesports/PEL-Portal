@@ -102,6 +102,28 @@ class _EditTeamPageState extends State<EditTeamPage> {
     setState(() => loading = false);
   }
 
+  Future<void> deleteTeam() async {
+    setState(() => loading = true);
+    try {
+      await AuthService.getAuthToken();
+      var response = await httpClient.delete(Uri.parse("$API_HOST/teams/${widget.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+      if (response.statusCode == 200) {
+        await AuthService.getAuthToken();
+        await httpClient.delete(Uri.parse("$API_HOST/teams/${widget.id}/users/${currentUser.id}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+        await AuthService.getUser(currentUser.id);
+        Future.delayed(Duration.zero, () => router.navigateTo(context, "/teams", transition: TransitionType.fadeIn));
+      } else {
+        Logger.error("[edit_team_page] Failed to delete team! ${response.statusCode} ${response.body}");
+        Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to delete team!"));
+      }
+    } catch(err) {
+      Logger.info("[edit_team_page] Error deleting team: $err");
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to delete team!"));
+      setState(() => loading = false);
+    }
+    setState(() => loading = false);
+  }
+
   Future<void> selectIconImage() async {
     Trace trace = FirebasePerformance.instance.newTrace("selectIconImage()");
     await trace.start();
@@ -267,6 +289,29 @@ class _EditTeamPageState extends State<EditTeamPage> {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      !loading ? Row(
+                        children: [
+                          PELTextButton(
+                            text: "Save Changes",
+                            onPressed: () {
+                              saveTeam();
+                            },
+                          ),
+                          const Padding(padding: EdgeInsets.all(8)),
+                          PELTextButton(
+                            text: "Delete",
+                            color: Colors.redAccent,
+                            onPressed: () {
+                              Future.delayed(Duration.zero, () => AlertService.showConfirmationDialog(context, "Delete Team?", "Are you sure you want to delete this team? This action cannot be undone!", () => deleteTeam()));
+                            },
+                          )
+                        ],
+                      ) : const Center(
+                        child: RefreshProgressIndicator(
+                          backgroundColor: PEL_MAIN,
+                          color: Colors.white,
                         ),
                       ),
                     ],
@@ -442,26 +487,6 @@ class _EditTeamPageState extends State<EditTeamPage> {
                                       ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(top: LH.hpd(context)) / 2),
-                            loading ? Center(
-                              child: Container(
-                                padding: const EdgeInsets.all(16),
-                                child: const RefreshProgressIndicator(
-                                  backgroundColor: PEL_MAIN,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ) : Card(
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: PELTextButton(
-                                  text: "Save Changes",
-                                  onPressed: () {
-                                    saveTeam();
-                                  },
                                 ),
                               ),
                             ),

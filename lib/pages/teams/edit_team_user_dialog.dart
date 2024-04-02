@@ -54,11 +54,17 @@ class _EditTeamUserDialogState extends State<EditTeamUserDialog> {
   }
 
   Future<void> saveUser() async {
+    for (var u in users) {
+      print("${u.user.firstName} – ${u.roles}");
+    }
     if (user.roles.isEmpty) {
       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Please select at least one role!"));
       return;
     } else if (user.userID == currentUser.id && !user.roles.contains("ADMIN") && users.where((element) => element.roles.contains("ADMIN")).isEmpty) {
       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "You cannot remove your own admin role before assigning at least one other user as an admin."));
+      return;
+    } else if (user.roles.contains("MANAGER") && users.where((element) => element.roles.contains("MANAGER")).length > 1) {
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Team can only have one manager! Please remove the manager role from another user first."));
       return;
     }
     setState(() => loading = true);
@@ -76,6 +82,24 @@ class _EditTeamUserDialogState extends State<EditTeamUserDialog> {
     } else {
       Logger.error("[edit_team_user_dialog] Failed to save user roles! ${response.statusCode} ${response.body}");
       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to save user!"));
+    }
+    setState(() => loading = false);
+  }
+
+  Future<void> removeUser() async {
+    if (users.length == 1) {
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "There is only one member in this team, please delete the team instead!"));
+      return;
+    }
+    setState(() => loading = true);
+    await AuthService.getAuthToken();
+    var response = await httpClient.delete(Uri.parse("$API_HOST/teams/${widget.teamID}/users/${user.userID}"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
+    if (response.statusCode == 200) {
+      Future.delayed(Duration.zero, () => router.pop(context));
+      Future.delayed(Duration.zero, () => router.navigateTo(context, "/teams/${widget.teamID}", transition: TransitionType.fadeIn));
+    } else {
+      Logger.error("[edit_team_user_dialog] Failed to remove user! ${response.statusCode} ${response.body}");
+      Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to remove user!"));
     }
     setState(() => loading = false);
   }
@@ -154,23 +178,34 @@ class _EditTeamUserDialogState extends State<EditTeamUserDialog> {
                   ),
                 ),
                 const Padding(padding: EdgeInsets.all(8)),
-                Row(
+                !loading ? Row(
                   children: [
                     Expanded(
-                      child: !loading ? PELTextButton(
+                      child: PELTextButton(
                         text: "Save",
                         onPressed: () {
                           saveUser();
                         },
-                      ) : const Center(
-                        child: RefreshProgressIndicator(
-                          backgroundColor: PEL_MAIN,
-                          color: Colors.white,
-                        ),
                       ),
                     ),
+                    const Padding(padding: EdgeInsets.all(8)),
+                    Expanded(
+                      child: PELTextButton(
+                        text: "Remove User",
+                        style: PELTextButtonStyle.filled,
+                        color: Colors.redAccent,
+                        onPressed: () {
+                          Future.delayed(Duration.zero, () => AlertService.showConfirmationDialog(context, "Remove User?", "Are you sure you want to remove this user? This action cannot be undone!", () => removeUser()));
+                        },
+                      )
+                    )
                   ],
-                )
+                ) : const Center(
+                  child: RefreshProgressIndicator(
+                    backgroundColor: PEL_MAIN,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             )
         ) : const SizedBox(

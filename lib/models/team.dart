@@ -95,11 +95,10 @@ class TeamUser {
 
 Map<String, String> teamRoles = {
   "ADMIN": "User has full control over the team. They can remove users, change roles, and delete the team. Assign this role carefully.",
-  "CAPTAIN": "User is the team captain, they can sign up for tournaments, manage the team, and more.",
+  "MANAGER": "User is the team manager, they can sign up for tournaments, and will be the contact person for scheduling.",
   "EDITOR": "User can edit team information, change icon, etc.",
   "ACTIVE": "User is an active player on the team roster.",
   "RESERVE": "User is a reserve player on the team roster.",
-  "MEMBER": "User is a member of the team. Nothing more, nothing less.",
   "PENDING": "This role marks that the user is pending approval to join the team.",
 };
 
