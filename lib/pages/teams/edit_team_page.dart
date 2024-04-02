@@ -379,6 +379,10 @@ class _EditTeamPageState extends State<EditTeamPage> {
                                               value: "League of Legends",
                                               child: Text("League of Legends"),
                                             ),
+                                            DropdownMenuItem(
+                                              value: "Team Fight Tactics",
+                                              child: Text("Team Fight Tactics"),
+                                            ),
                                           ],
                                           borderRadius: BorderRadius.circular(8),
                                           onChanged: (item) {

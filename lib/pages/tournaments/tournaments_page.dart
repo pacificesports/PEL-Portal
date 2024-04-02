@@ -67,6 +67,8 @@ class _TournamentsPageState extends State<TournamentsPage> {
         return "assets/images/icons/league.jpeg";
       case "Valorant":
         return "assets/images/icons/valorant.png";
+      case "Team Fight Tactics":
+        return "assets/images/icons/tft.png";
       default:
         return "assets/images/pel_icons/Mark Mono.png";
     }

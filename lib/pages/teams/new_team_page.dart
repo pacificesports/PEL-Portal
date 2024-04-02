@@ -218,6 +218,10 @@ class _NewTeamPageState extends State<NewTeamPage> {
                                             value: "League of Legends",
                                             child: Text("League of Legends"),
                                           ),
+                                          DropdownMenuItem(
+                                            value: "Team Fight Tactics",
+                                            child: Text("Team Fight Tactics"),
+                                          ),
                                         ],
                                         borderRadius: BorderRadius.circular(8),
                                         onChanged: (item) {

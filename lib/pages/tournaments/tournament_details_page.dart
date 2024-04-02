@@ -71,36 +71,6 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
     }
   }
 
-  // Future<void> joinTeam() async {
-  //   setState(() => joinLoading = true);
-  //   try {
-  //     TeamUser teamUser = TeamUser();
-  //     teamUser.teamID = tournament.id;
-  //     teamUser.userID = currentUser.id;
-  //     teamUser.title = "Member";
-  //     teamUser.roles = ["PENDING"];
-  //     await AuthService.getAuthToken();
-  //     var response = await httpClient.post(Uri.parse("$API_HOST/teams/${tournament.id}/users"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(teamUser));
-  //     if (response.statusCode == 200) {
-  //       await AuthService.getAuthToken();
-  //       response = await httpClient.post(Uri.parse("$API_HOST/teams/${tournament.id}/users/${currentUser.id}/roles"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"}, body: jsonEncode(teamUser.roles));
-  //       if (response.statusCode == 200) {
-  //         Future.delayed(Duration.zero, () => AlertService.showSuccessSnackbar(context, "Team joined successfully!"));
-  //         Future.delayed(Duration.zero, () => router.navigateTo(context, "/teams/${tournament.id}", transition: TransitionType.fadeIn));
-  //       } else {
-  //         Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to add user to team!"));
-  //       }
-  //     } else {
-  //       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to add user to team!"));
-  //     }
-  //   } catch(err) {
-  //     Logger.info("[tournament_details_page] Error joining team: $err");
-  //     Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to join team!"));
-  //     setState(() => joinLoading = false);
-  //   }
-  //   setState(() => joinLoading = false);
-  // }
-
   Future<void> unregisterTeam(String teamID) async {
     var response = await httpClient.delete(Uri.parse("$API_HOST/tournaments/${tournament.id}/teams/$teamID"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
     if (response.statusCode == 200) {
@@ -110,6 +80,19 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
     } else {
       Logger.error("[tournament_details_page] Error unregistering team: ${response.body}");
       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Failed to unregister team!"));
+    }
+  }
+
+  String getGameImage(String game) {
+    switch (game) {
+      case "League of Legends":
+        return "assets/images/icons/league.jpeg";
+      case "Valorant":
+        return "assets/images/icons/valorant.png";
+      case "Team Fight Tactics":
+        return "assets/images/icons/tft.png";
+      default:
+        return "assets/images/pel_icons/Mark Mono.png";
     }
   }
 
@@ -165,6 +148,7 @@ class _TournamentDetailsPageState extends State<TournamentDetailsPage> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Expanded(child: Text(tournament.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white)),),
+                              Image.asset(getGameImage(tournament.game), width: 55, height: 55),
                             ],
                           ),
                         ),

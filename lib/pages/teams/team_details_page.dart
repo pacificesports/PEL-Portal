@@ -504,12 +504,19 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
                                                             const Padding(padding: EdgeInsets.all(4)),
                                                             Text("${user.user.getConnection("valorant_id").connection} ", style: const TextStyle(fontSize: 18, color: Colors.grey)),
                                                           ],
-                                                        ) : Row(
+                                                        ) : team.game == "League of Legends" ? Row(
                                                           mainAxisSize: MainAxisSize.min,
                                                           children: [
                                                             Image.asset("assets/images/icons/league.jpeg", height: 18),
                                                             const Padding(padding: EdgeInsets.all(4)),
                                                             Text(user.user.getConnection("league_id").connection != "" ? user.user.getConnection("league_id").connection : "Not Connected", style: const TextStyle(fontSize: 18, color: Colors.grey)),
+                                                          ],
+                                                        ) : Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Image.asset("assets/images/icons/tft.png", height: 18),
+                                                            const Padding(padding: EdgeInsets.all(4)),
+                                                            Text(user.user.getConnection("tft_id").connection != "" ? user.user.getConnection("tft_id").connection : "Not Connected", style: const TextStyle(fontSize: 18, color: Colors.grey)),
                                                           ],
                                                         ),
                                                       ],
