@@ -36,6 +36,9 @@ class AuthService {
       response = await httpClient.get(Uri.parse("$API_HOST/users/teams/$id"), headers: {"PEL-API-KEY": PEL_API_KEY, "Authorization": "Bearer $PEL_AUTH_TOKEN"});
       if (response.statusCode == 200) {
         currentTeams = jsonDecode(response.body)["data"].map<Team>((json) => Team.fromJson(json)).toList();
+        for (var element in currentTeams) {
+          if (element.id == "") currentTeams.remove(element);
+        }
       } else {
         log("Failed to get teams for user $id");
       }

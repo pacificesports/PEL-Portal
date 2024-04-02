@@ -206,7 +206,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
                       Row(
                         children: [
                           Visibility(
-                            visible: team.users.any((element) => element.userID == currentUser.id) && team.users.firstWhere((element) => element.userID == currentUser.id).roles.any((element) => ["ADMIN", "CAPTAIN", "EDITOR"].contains(element)),
+                            visible: team.users.any((element) => element.userID == currentUser.id) && team.users.firstWhere((element) => element.userID == currentUser.id).roles.any((element) => ["ADMIN", "MANAGER", "EDITOR"].contains(element)),
                             child: PELTextButton(
                               text: "Edit Team",
                               style: PELTextButtonStyle.outlined,
@@ -391,6 +391,26 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                Visibility(
+                                  visible: !team.users.any((element) => element.roles.contains("MANAGER")),
+                                  child: const Card(
+                                    color: Colors.redAccent,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Padding(padding: EdgeInsets.all(4)),
+                                          Icon(Icons.warning, color: Colors.white),
+                                          Padding(padding: EdgeInsets.all(4)),
+                                          Text(
+                                            "Team is missing a manager",
+                                            style: TextStyle(fontSize: 18, color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 Column(
                                   children: team.users.where((u) => !u.roles.contains("PENDING")).map((user) => Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
@@ -435,12 +455,12 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
                                                         Text(user.title, style: const TextStyle(fontSize: 18, color: Colors.grey)),
                                                         const Padding(padding: EdgeInsets.all(4)),
                                                         Visibility(
-                                                          visible: user.roles.contains("CAPTAIN"),
+                                                          visible: user.roles.contains("MANAGER"),
                                                           child: const Card(
                                                             color: PEL_MAIN,
                                                             child: Padding(
                                                               padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                                                              child: Text("Captain"),
+                                                              child: Text("Manager"),
                                                             ),
                                                           ),
                                                         ),
@@ -484,12 +504,19 @@ class _TeamDetailsPageState extends State<TeamDetailsPage> {
                                                             const Padding(padding: EdgeInsets.all(4)),
                                                             Text("${user.user.getConnection("valorant_id").connection} ", style: const TextStyle(fontSize: 18, color: Colors.grey)),
                                                           ],
-                                                        ) : Row(
+                                                        ) : team.game == "League of Legends" ? Row(
                                                           mainAxisSize: MainAxisSize.min,
                                                           children: [
                                                             Image.asset("assets/images/icons/league.jpeg", height: 18),
                                                             const Padding(padding: EdgeInsets.all(4)),
                                                             Text(user.user.getConnection("league_id").connection != "" ? user.user.getConnection("league_id").connection : "Not Connected", style: const TextStyle(fontSize: 18, color: Colors.grey)),
+                                                          ],
+                                                        ) : Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Image.asset("assets/images/icons/tft.png", height: 18),
+                                                            const Padding(padding: EdgeInsets.all(4)),
+                                                            Text(user.user.getConnection("tft_id").connection != "" ? user.user.getConnection("tft_id").connection : "Not Connected", style: const TextStyle(fontSize: 18, color: Colors.grey)),
                                                           ],
                                                         ),
                                                       ],

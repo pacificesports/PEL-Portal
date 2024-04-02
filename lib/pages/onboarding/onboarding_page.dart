@@ -128,11 +128,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               Expanded(
                                 child: Card(
                                   child: InkWell(
-                                    onTap: () => launchUrlString("https://youtu.be/KQJsFHmRFAw"),
+                                    onTap: () => launchUrlString("https://www.youtube.com/watch?v=29qTrs2rhB4"),
                                     child: Stack(
                                       children: [
                                         Image.asset(
-                                          "assets/images/onboarding/redwood-rumble.png",
+                                          "assets/images/onboarding/fractured-coast.png",
                                           fit: BoxFit.cover,
                                           width: double.infinity,
                                           height: double.infinity,
