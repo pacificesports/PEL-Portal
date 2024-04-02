@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:fluro/fluro.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pel_portal/models/team.dart';
 import 'package:pel_portal/pages/teams/edit_team_user_dialog.dart';

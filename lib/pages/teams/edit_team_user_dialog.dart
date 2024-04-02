@@ -54,9 +54,6 @@ class _EditTeamUserDialogState extends State<EditTeamUserDialog> {
   }
 
   Future<void> saveUser() async {
-    for (var u in users) {
-      print("${u.user.firstName} – ${u.roles}");
-    }
     if (user.roles.isEmpty) {
       Future.delayed(Duration.zero, () => AlertService.showErrorSnackbar(context, "Please select at least one role!"));
       return;
